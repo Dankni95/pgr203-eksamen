@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class QuestionDaoTest {
+public class QuestionDaoTest  {
     private final QuestionDao dao = new QuestionDao(TestData.testDataSource());
 
     @Test

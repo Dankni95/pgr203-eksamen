@@ -62,8 +62,8 @@ class HttpServerTest {
     @Test
     void shouldReturnOptionsFromServer() throws IOException, SQLException {
         OptionDao optionDao = new OptionDao(TestData.testDataSource());
-        optionDao.save("Eple");
-        optionDao.save("Pære");
+
+        ///fix
         server.addController("/api/roleOptions", new OptionsController(optionDao));
         
         HttpClient client = new HttpClient("localhost", server.getPort(), "/api/roleOptions");

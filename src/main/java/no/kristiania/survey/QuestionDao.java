@@ -9,19 +9,26 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionDao {
-    private final DataSource dataSource;
-
+public class QuestionDao extends AbstractDao<Question> {
     public QuestionDao(DataSource dataSource) {
+        super(dataSource);
+    }
 
-        this.dataSource = dataSource;
+
+    @Override
+    protected Question readFromResultSet(ResultSet rs) throws SQLException {
+        Question question = new Question();
+        question.setId(rs.getLong("id"));
+        question.setTitle(rs.getString("question_title"));
+        question.setText(rs.getString("question_text"));
+        return question;
     }
 
     public void save(Question question) throws SQLException {
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "insert into questions (title, text) values (?, ?)",
+                    "insert into question (question_title, question_text) values (?, ?)",
                     Statement.RETURN_GENERATED_KEYS
 
             )) {
@@ -40,7 +47,7 @@ public class QuestionDao {
 
     public Question retrieve(long id) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("select * from questions where id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("select * from question where id = ?")) {
                 statement.setLong(1, id);
 
                 try (ResultSet rs = statement.executeQuery()) {
@@ -54,7 +61,7 @@ public class QuestionDao {
 
     public List<Question> listAll() throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("select * from questions")) {
+            try (PreparedStatement statement = connection.prepareStatement("select * from question")) {
                 try (ResultSet rs = statement.executeQuery()) {
                     ArrayList<Question> result = new ArrayList<>();
                     while (rs.next()) {
@@ -64,14 +71,5 @@ public class QuestionDao {
                 }
             }
         }
-    }
-
-
-    private Question readFromResultSet(ResultSet rs) throws SQLException {
-        Question question = new Question();
-        question.setId(rs.getLong("id"));
-        question.setTitle(rs.getString("title"));
-        question.setText(rs.getString("text"));
-        return question;
     }
 }

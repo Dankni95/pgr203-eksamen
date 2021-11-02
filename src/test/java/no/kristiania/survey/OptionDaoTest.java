@@ -14,10 +14,16 @@ class OptionDaoTest {
         String option1 = "option-" + UUID.randomUUID();
         String option2 = "option-" + UUID.randomUUID();
 
-        dao.save(option1);
-        dao.save(option2);
+        Option option = new Option();
+        option.setTitle(option1);
+        dao.save(option);
+
+        Option op = new Option();
+        op.setTitle(option2);
+        dao.save(op);
 
         assertThat(dao.listAll())
-                .contains(option1, option2);
+                .extracting(Option::getTitle)
+                .contains(option.getTitle(), op.getTitle());
     }
 }

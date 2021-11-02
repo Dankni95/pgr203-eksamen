@@ -1,5 +1,6 @@
 package no.kristiania.http;
 
+import no.kristiania.survey.Option;
 import no.kristiania.survey.OptionDao;
 
 import java.sql.SQLException;
@@ -16,8 +17,8 @@ public class OptionsController implements HttpController {
         String responseText = "";
 
         int value = 1;
-        for (String role : optionDao.listAll()) {
-            responseText += "<option value=" + (value++) + ">" + role + "</option>";
+        for (Option option : optionDao.listAll()) {
+            responseText += "<option value=" + (value++) + ">" + option.getTitle() + "</option>";
         }
         return new HttpMessage("HTTP 200 OK", responseText);
     }
