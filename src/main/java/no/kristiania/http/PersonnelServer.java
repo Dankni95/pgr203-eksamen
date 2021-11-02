@@ -17,17 +17,17 @@ public class PersonnelServer {
     private static final Logger logger = LoggerFactory.getLogger(HttpServer.class);
 
     public static void main(String[] args) throws IOException {
-        HttpServer httpServer = new HttpServer(1962);
+        HttpServer httpServer = new HttpServer(8081);
         DataSource dataSource = createDataSource();
 
         QuestionDao questionDao = new QuestionDao(dataSource);
         OptionDao optionDao = new OptionDao(dataSource);
 
-        httpServer.addController("/api/people", new ListQuestionController(questionDao));
-        httpServer.addController("/api/newPerson", new CreateQuestionController(questionDao));
-        httpServer.addController("/api/roleOptions", new OptionsController(optionDao));
+        httpServer.addController("/api/question", new ListQuestionController(questionDao));
+        httpServer.addController("/api/newQuestion", new CreateQuestionController(questionDao));
+        httpServer.addController("/api/option", new OptionsController(optionDao));
         
-        logger.info("Started http://localhost:{}/index.html", httpServer.getPort());
+        logger.info("Started http://localhost:{}/", httpServer.getPort());
     }
 
     private static DataSource createDataSource() throws IOException {
@@ -37,8 +37,8 @@ public class PersonnelServer {
         }
 
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        dataSource.setUrl(properties.getProperty("dataSource.url", "jdbc:postgresql://localhost:5432/person_db"));
-        dataSource.setUser(properties.getProperty("dataSource.username", "person_dbuser"));
+        dataSource.setUrl(properties.getProperty("dataSource.url", "jdbc:postgresql://localhost:5432/survey_db"));
+        dataSource.setUser(properties.getProperty("dataSource.username", "survey_dbuser"));
         dataSource.setPassword(properties.getProperty("dataSource.password"));
         Flyway.configure().dataSource(dataSource).load().migrate();
         return dataSource;

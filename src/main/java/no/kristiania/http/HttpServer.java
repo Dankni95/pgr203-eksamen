@@ -46,25 +46,29 @@ public class HttpServer {
         } else {
             fileTarget = requestTarget;
         }
-        
         if (controllers.containsKey(fileTarget)) {
             HttpMessage response = controllers.get(fileTarget).handle(httpMessage);
             response.write(clientSocket);
             return;
         }
 
+
+        if (fileTarget.equals("/")) fileTarget = "/index.html";
+
         InputStream fileResource = getClass().getResourceAsStream(fileTarget);
+
         if (fileResource != null) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             fileResource.transferTo(buffer);
             String responseText = buffer.toString();
 
             String contentType = "text/plain";
-            if (requestTarget.endsWith(".html")) {
+            if (requestTarget.endsWith(".html") || fileTarget.equals("/index.html")) {
                 contentType = "text/html";
             } else if (requestTarget.endsWith(".css")) {
                 contentType = "text/css";
             }
+
             writeOkResponse(clientSocket, responseText, contentType);
             return;
         }
