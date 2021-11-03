@@ -1,5 +1,8 @@
 package no.kristiania.http;
 
+import no.kristiania.controllers.CreateQuestionController;
+import no.kristiania.controllers.ListQuestionController;
+import no.kristiania.controllers.OptionsController;
 import no.kristiania.survey.*;
 import org.junit.jupiter.api.Test;
 
@@ -62,11 +65,18 @@ class HttpServerTest {
     @Test
     void shouldReturnOptionsFromServer() throws IOException, SQLException {
         OptionDao optionDao = new OptionDao(TestData.testDataSource());
+        Option option = new Option();
+        Option option2 = new Option();
 
-        ///fix
-        server.addController("/api/roleOptions", new OptionsController(optionDao));
+        option.setTitle("Teacher");
+        option2.setTitle("Student");
+
+        optionDao.save(option);
+        optionDao.save(option2);
+
+        server.addController("/api/option", new OptionsController(optionDao));
         
-        HttpClient client = new HttpClient("localhost", server.getPort(), "/api/roleOptions");
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/api/option");
         assertEquals(
                 "<option value=1>Teacher</option><option value=2>Student</option>",
                 client.getMessageBody()
@@ -77,14 +87,14 @@ class HttpServerTest {
     @Test
     void shouldCreateNewQuestion() throws IOException, SQLException {
         QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
-        server.addController("/api/newPerson", new CreateQuestionController(questionDao));
+        server.addController("/api/newQuestion", new CreateQuestionController(questionDao));
         
         
         HttpPostClient postClient = new HttpPostClient(
                 "localhost",
                 server.getPort(),
-                "/api/newPerson",
-                "lastName=Persson&firstName=Test"
+                "/api/newQuestion",
+                "text=Persson&title=Test"
         );
         assertEquals(200, postClient.getStatusCode());
         
@@ -93,6 +103,7 @@ class HttpServerTest {
                     assertThat(p.getTitle()).isEqualTo("Test");
                     assertThat(p.getText()).isEqualTo("Persson");
                 });
+        questionDao.deleteAll();
     }
 
     @Test
@@ -105,11 +116,16 @@ class HttpServerTest {
         Question question2 = QuestionDaoTest.exampleQuestion();
         questionDao.save(question1);
         questionDao.save(question2);
+
+
+        //Still fails because not decoded correctly
+
         
         HttpClient client = new HttpClient("localhost", server.getPort(), "/api/question");
         assertThat(client.getMessageBody())
-                .contains("<div>" + question1.getText() + ", " + question1.getTitle() + "</div>")
-                .contains("<div>" + question2.getText() + ", " + question2.getTitle() + "</div>")
-        ;
+                .contains("<h1>" + question1.getText() + ", " + question1.getTitle() + "</h1>")
+                .contains("<h1>" + question2.getText() + ", " + question2.getTitle() + "</h1>");
+
+        questionDao.deleteAll();
     }
 }

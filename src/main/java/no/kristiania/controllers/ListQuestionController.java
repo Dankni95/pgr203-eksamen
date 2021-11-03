@@ -1,6 +1,8 @@
-package no.kristiania.http;
+package no.kristiania.controllers;
 
 
+import no.kristiania.http.HttpController;
+import no.kristiania.http.HttpMessage;
 import no.kristiania.survey.Question;
 import no.kristiania.survey.QuestionDao;
 
@@ -19,7 +21,7 @@ public class ListQuestionController implements HttpController {
         String messageBody = "";
 
         for (Question question : questionDao.listAll()) {
-            messageBody += "<div>" + question.getText() + ", " + question.getTitle() + "</div>";
+            messageBody += "<h1>" + question.getText() + ", " + question.getTitle() + "</h1>";
         }
 
 

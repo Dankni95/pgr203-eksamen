@@ -1,23 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kristiania Questionnaire</title>
-    <link rel="stylesheet" href="style.css">
+
+
+    <style>
+
+
+        /* Styling the Body element i.e. Color,
+        Font, Alignment */
+        body {
+            background-color: cornflowerblue;
+            font-family: Verdana;
+            text-align: center;
+        }
+
+
+        /* Styling the Form (Color, Padding, Shadow) */
+        form {
+            background-color: ghostwhite;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px 20px;
+            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Styling form-control Class */
+        .form-control {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        /* Styling form-control Label */
+        .form-control label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Styling form-control input,
+        select, textarea */
+        .form-control input,
+        .form-control select,
+        .form-control textarea {
+            border: 1px solid #777;
+            border-radius: 2px;
+            font-family: inherit;
+            padding: 10px;
+            display: block;
+            width: 95%;
+        }
+
+        /* Styling form-control Radio
+        button and Checkbox */
+        .form-control input[type="radio"],
+        .form-control input[type="checkbox"] {
+            display: inline-block;
+            width: auto;
+        }
+
+        /* Styling Button */
+        button {
+            background-color: #05c46b;
+            border: 1px solid #777;
+            border-radius: 2px;
+            font-family: inherit;
+            font-size: 21px;
+            display: block;
+            width: 100%;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        #btn {
+            background-color: rgb(19, 47, 138);
+            text-decoration: none;
+            max-width: 750px;
+            margin: 50px auto;
+            padding: 30px 20px;
+            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        a:link {
+            color: rgb(255, 255, 255);
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: pink;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        h2 {
+            text-align: center;
+            color: blueviolet;
+        }
+        h4 {
+            text-align: center;
+            color: darkslateblue;
+        }
+        label {
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
 <h1>Questionnaire</h1>
-<div id="questions"></div>
-<div>
-    <a href="newQuestion.html">Add new questions</a>
+
+<!-- Create Form -->
+<form id="form" Method="GET" action=/api/option> <!-- Details -->
+    <div class="form-control">
+        <label for="first-name" id="first-name">
+            First name
+        </label>
+
+        <!-- Input Type Text -->
+        <input type="text" id="name" placeholder="Enter your first name"/>
+    </div>
+
+    <div class="form-control">
+        <label for="last-name" id="label-last-name">
+            Last name
+        </label>
+
+        <!-- Input Type Text -->
+        <input type="text" id="name" placeholder="Enter your last name"/>
+    </div>
+
+    <div class="form-control">
+        <label for="email" id="label-email">
+            Email
+        </label>
+
+        <!-- Input Type Email-->
+        <input type="email" id="email" placeholder="Enter your email"/>
+    </div>
+
+
+    <!-- Multi-line Text Input Control -->
+    <button type="submit" value="submit">
+        Submit
+    </button>
+</form>
+
+<div id="question" class="form-control">
+
+
+    <!-- Dropdown options -->
+    <select id="option" name="role" id="role">
+    </select>
 </div>
-</body>
+
+
+<button id="btn">
+    <a href="newQuestion.html">Add new questions</a>
+</button>
+
 <script>
-    fetch("/api/question")
-        .then(function(response) {
+
+    fetch("/api/option")
+        .then(function (response) {
             return response.text();
-        }).then(function(text) {
-        document.getElementById("questions").innerHTML = text;
-    });
+        }).then(function (text) {
+        document.getElementById("question").innerHTML = text;
+    })
 </script>
+</body>
+
 </html>

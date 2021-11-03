@@ -1,5 +1,7 @@
-package no.kristiania.http;
+package no.kristiania.controllers;
 
+import no.kristiania.http.HttpController;
+import no.kristiania.http.HttpMessage;
 import no.kristiania.survey.Option;
 import no.kristiania.survey.OptionDao;
 
@@ -20,6 +22,7 @@ public class OptionsController implements HttpController {
         for (Option option : optionDao.listAll()) {
             responseText += "<option value=" + (value++) + ">" + option.getTitle() + "</option>";
         }
-        return new HttpMessage("HTTP 200 OK", responseText);
+        return new HttpMessage("HTTP/1.1 200 OK", responseText);
+
     }
 }

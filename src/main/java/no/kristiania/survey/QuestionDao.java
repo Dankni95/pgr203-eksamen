@@ -72,4 +72,9 @@ public class QuestionDao extends AbstractDao<Question> {
             }
         }
     }
+
+    @Override
+    public void deleteAll() throws SQLException {
+        super.deleteAll("delete from question");
+    }
 }
