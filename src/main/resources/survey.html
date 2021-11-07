@@ -113,43 +113,8 @@
 </head>
 
 <body>
-<h1>Questionnaire</h1>
+<h1>Survey</h1>
 
-<!-- Create Form -->
-<form id="form" action="/api/user" method="POST"> <!-- Details -->
-    <div class="form-control">
-        <label for="first-name">
-            First name
-        </label>
-
-        <!-- Input Type Text -->
-        <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required/>
-    </div>
-
-    <div class="form-control">
-        <label for="last-name" id="label-last-name">
-            Last name
-        </label>
-
-        <!-- Input Type Text -->
-        <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required/>
-    </div>
-
-    <div class="form-control">
-        <label for="email" id="label-email">
-            Email
-        </label>
-
-        <!-- Input Type Email-->
-        <input type="email" id="email" name="email" placeholder="Enter your email" required/>
-    </div>
-
-
-    <!-- Multi-line Text Input Control -->
-    <button type="submit" value="submit">
-        Create user
-    </button>
-</form>
 
 
     <div id="question" class="form-control"></div>
@@ -163,7 +128,7 @@
 <script>
 
 
-        fetch("/api/surveys")
+        fetch("/api/get-specific-survey")
             .then(function (response) {
                 return response.text();
             }).then(function (text) {

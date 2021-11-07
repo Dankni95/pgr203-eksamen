@@ -1,4 +1,4 @@
-package no.kristiania.survey;
+package no.kristiania.dao;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -20,8 +20,8 @@ public abstract class AbstractDao<T> {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, id);
                 try (ResultSet rs = statement.executeQuery()) {
-                    rs.next();
-                    return readFromResultSet(rs);
+                    if (rs.next()) return readFromResultSet(rs);
+                    else return null;
                 }
             }
         }

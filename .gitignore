@@ -4,5 +4,5 @@
 target/
 # Datasource local storage ignored files
 /dependency-reduced-pom.xml
-src/main/resources/conf/pgr203.properties
+pgr203.properties/
 

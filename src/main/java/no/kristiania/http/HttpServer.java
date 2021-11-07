@@ -1,11 +1,10 @@
 package no.kristiania.http;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,39 +12,57 @@ public class HttpServer {
 
     private final ServerSocket serverSocket;
     private final Map<String, HttpController> controllers = new HashMap<>();
+    private Socket clientSocket;
+    private HttpMessage httpMessage;
 
     public HttpServer(int serverPort) throws IOException {
         serverSocket = new ServerSocket(serverPort);
+
 
         new Thread(this::handleClients).start();
     }
 
     private void handleClients() {
+
         try {
             while (true) {
                 handleClient();
             }
-        } catch (IOException | SQLException e) {
+        } catch (Exception e) {
+            new Thread(this::handleError).start();
+            new Thread(this::handleClients).start();
             e.printStackTrace();
+        }
+
+    }
+
+    private void handleError() {
+        try {
+            HttpMessage response = controllers.get("/error").handle(httpMessage);
+            response.write(clientSocket);
+        } catch (Exception ignored) {
         }
     }
 
-    private void handleClient() throws IOException, SQLException {
-        Socket clientSocket = serverSocket.accept();
 
-        HttpMessage httpMessage = new HttpMessage(clientSocket);
+    private void handleClient() throws IOException, SQLException {
+        clientSocket = serverSocket.accept();
+        httpMessage = new HttpMessage(clientSocket);
         String[] requestLine = httpMessage.startLine.split(" ");
         String requestTarget = requestLine[1];
+
 
         int questionPos = requestTarget.indexOf('?');
         String fileTarget;
         String query = null;
         if (questionPos != -1) {
             fileTarget = requestTarget.substring(0, questionPos);
-            query = requestTarget.substring(questionPos+1);
+            query = requestTarget.substring(questionPos + 1);
         } else {
             fileTarget = requestTarget;
         }
+
+
         if (controllers.containsKey(fileTarget)) {
             HttpMessage response = controllers.get(fileTarget).handle(httpMessage);
             response.write(clientSocket);
@@ -57,22 +74,25 @@ public class HttpServer {
 
         InputStream fileResource = getClass().getResourceAsStream(fileTarget);
 
+
         if (fileResource != null) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             fileResource.transferTo(buffer);
             String responseText = buffer.toString();
 
+            System.out.println(fileTarget);
+
             String contentType = "text/plain";
-            if (requestTarget.endsWith(".html") || fileTarget.equals("/index.html")) {
+            if (fileTarget.endsWith(".html") || fileTarget.equals("/index.html")) {
                 contentType = "text/html";
-            } else if (requestTarget.endsWith(".css")) {
+            } else if (fileTarget.endsWith(".css")) {
                 contentType = "text/css";
-            }
+            } else if (fileTarget.endsWith(".ico")) contentType = "image/webp";
 
             writeOkResponse(clientSocket, responseText, contentType);
             return;
         }
-        
+
         String responseText = "File not found: " + requestTarget;
 
         String response = "HTTP/1.1 404 Not found\r\n" +

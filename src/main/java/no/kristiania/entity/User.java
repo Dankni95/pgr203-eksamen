@@ -1,4 +1,4 @@
-package no.kristiania.survey;
+package no.kristiania.entity;
 
 public class User {
     private String firstName;

@@ -1,11 +1,10 @@
 package no.kristiania.http;
 
-import no.kristiania.controllers.AnswerController;
-import no.kristiania.controllers.CreateQuestionController;
-import no.kristiania.controllers.ListQuestionController;
-import no.kristiania.controllers.SurveyController;
-import no.kristiania.survey.OptionDao;
-import no.kristiania.survey.QuestionDao;
+import no.kristiania.controllers.*;
+import no.kristiania.dao.OptionDao;
+import no.kristiania.dao.QuestionDao;
+import no.kristiania.dao.SurveyDao;
+import no.kristiania.dao.UserDao;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.slf4j.Logger;
@@ -26,19 +25,28 @@ public class PersonnelServer {
 
         QuestionDao questionDao = new QuestionDao(dataSource);
         OptionDao optionDao = new OptionDao(dataSource);
+        SurveyDao surveyDao = new SurveyDao(dataSource);
+        UserDao userDao = new UserDao(dataSource);
+
+
+        httpServer.addController("/error", new ErrorController());
 
 
         httpServer.addController("/api/question", new ListQuestionController(questionDao));
-        httpServer.addController("/api/newQuestion", new CreateQuestionController(questionDao));
-        httpServer.addController("/api/option", new SurveyController(optionDao, questionDao));
-        httpServer.addController("/api/answers", new AnswerController(questionDao, "/index.html"));
+        httpServer.addController("/api/newQuestion", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
+        httpServer.addController("/api/get-specific-survey", new GetSurveyController(optionDao, questionDao));
+        httpServer.addController("/api/answer", new AnswerController(questionDao, "/index.html"));
+        httpServer.addController("/api/surveys", new writeAllSurveysController(surveyDao));
+        httpServer.addController("/api/all-surveys", new ListAllSurveysAsOptionsController(surveyDao));
+        httpServer.addController("/api/user", new CreateUserController(userDao));
+
 
         logger.info("Started http://localhost:{}/", httpServer.getPort());
     }
 
     private static DataSource createDataSource() throws IOException {
         Properties properties = new Properties();
-        try (FileReader reader = new FileReader("src/main/resources/conf/pgr203.properties")) {
+        try (FileReader reader = new FileReader("pgr203.properties")) {
             properties.load(reader);
         }
 

@@ -2,12 +2,11 @@ package no.kristiania.controllers;
 
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpMessage;
-import no.kristiania.survey.QuestionDao;
+import no.kristiania.dao.QuestionDao;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.Map;
 
 public class AnswerController implements HttpController {
@@ -20,8 +19,22 @@ public class AnswerController implements HttpController {
     }
 
     @Override
-    public HttpMessage handle(HttpMessage request) throws SQLException, IOException {
+    public HttpMessage handle(HttpMessage request) throws IOException {
         InputStream fileResource = getClass().getResourceAsStream(fileTarget);
+        Map<String, String> parameters = HttpMessage.parseRequestParameters(request.messageBody);
+
+
+
+
+
+
+        // Not implemented yet!
+
+
+
+
+
+
 
         String responseText;
         if (fileResource != null) {
@@ -30,14 +43,6 @@ public class AnswerController implements HttpController {
              responseText = buffer.toString();
         }else responseText = "Answers collected";
 
-        if (request.messageBody.isEmpty()) {
-            System.out.println("wooop wooop, request has nothing in it :O");
-        }
-        else{
-            Map<String, String> parameters = HttpMessage.parseRequestParameters(request.messageBody);
-            System.out.println("this "+parameters);
-            System.out.println(questionDao.retrieve(1).getTitle());
-        }
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
     }
 }

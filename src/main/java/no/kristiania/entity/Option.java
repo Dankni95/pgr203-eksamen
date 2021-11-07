@@ -1,8 +1,17 @@
-package no.kristiania.survey;
+package no.kristiania.entity;
 
 public class Option {
     private String title;
+    private long questionId;
     private long id;
+
+    public long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
+    }
 
     public long getId() {
         return id;

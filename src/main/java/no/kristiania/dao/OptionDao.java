@@ -1,4 +1,6 @@
-package no.kristiania.survey;
+package no.kristiania.dao;
+
+import no.kristiania.entity.Option;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -16,6 +18,7 @@ public class OptionDao extends AbstractDao<Option> {
     protected Option readFromResultSet(ResultSet rs) throws SQLException {
         Option option = new Option();
         option.setTitle(rs.getString("option_title"));
+        option.setQuestionId(rs.getLong("question_id"));
         option.setId(rs.getLong("id"));
         return option;
     }
@@ -24,10 +27,11 @@ public class OptionDao extends AbstractDao<Option> {
     public void save(Option option) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "insert into option (option_title) values (?)",
+                    "insert into option (question_id,option_title) values (?,?)",
                     Statement.RETURN_GENERATED_KEYS
             )) {
-                statement.setString(1, option.getTitle());
+                statement.setLong(1, option.getQuestionId());
+                statement.setString(2, option.getTitle());
                 statement.executeUpdate();
                 try (ResultSet rs = statement.getGeneratedKeys()) {
                     rs.next();

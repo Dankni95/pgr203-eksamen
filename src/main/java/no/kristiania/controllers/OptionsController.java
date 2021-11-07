@@ -2,8 +2,8 @@ package no.kristiania.controllers;
 
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpMessage;
-import no.kristiania.survey.Option;
-import no.kristiania.survey.OptionDao;
+import no.kristiania.entity.Option;
+import no.kristiania.dao.OptionDao;
 
 import java.sql.SQLException;
 

@@ -1,9 +1,11 @@
 package no.kristiania.http;
 
-import no.kristiania.controllers.CreateQuestionController;
-import no.kristiania.controllers.ListQuestionController;
+
+import no.kristiania.controllers.CreateSurveyController;
 import no.kristiania.controllers.OptionsController;
-import no.kristiania.survey.*;
+import no.kristiania.entity.Option;
+import no.kristiania.entity.Question;
+import no.kristiania.dao.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -67,9 +69,14 @@ class HttpServerTest {
         OptionDao optionDao = new OptionDao(TestData.testDataSource());
         Option option = new Option();
         Option option2 = new Option();
+        Question question = new Question();
+        Question question2 = new Question();
 
         option.setTitle("Teacher");
+        option.setQuestionId(1);
         option2.setTitle("Student");
+        option2.setQuestionId(1);
+
 
         optionDao.save(option);
         optionDao.save(option2);
@@ -87,45 +94,34 @@ class HttpServerTest {
     @Test
     void shouldCreateNewQuestion() throws IOException, SQLException {
         QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
-        server.addController("/api/newQuestion", new CreateQuestionController(questionDao));
+        OptionDao optionDao = new OptionDao(TestData.testDataSource());
+        UserDao userDao = new UserDao(TestData.testDataSource());
+        SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
+
+        server.addController("/api/newQuestion", new CreateSurveyController(questionDao,optionDao,userDao,surveyDao));
         
         
         HttpPostClient postClient = new HttpPostClient(
                 "localhost",
                 server.getPort(),
                 "/api/newQuestion",
-                "text=Persson&title=Test"
+                "text=Persson&title=Test&option_1=option"
         );
-        assertEquals(200, postClient.getStatusCode());
+        assertEquals(303, postClient.getStatusCode());
         
         assertThat(questionDao.listAll())
                 .anySatisfy(p -> {
                     assertThat(p.getTitle()).isEqualTo("Test");
                     assertThat(p.getText()).isEqualTo("Persson");
                 });
-        questionDao.deleteAll();
-    }
 
-    @Test
-    void shouldListQuestions() throws SQLException, IOException {
-        QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
+        assertThat(optionDao.listAll())
+                .anySatisfy(o -> {
+                    assertThat(o.getTitle()).isEqualTo("option");
+                    assertThat(o.getQuestionId()).isEqualTo(1);
+                });
 
-        server.addController("/api/question", new ListQuestionController(questionDao));
-        
-        Question question1 = QuestionDaoTest.exampleQuestion();
-        Question question2 = QuestionDaoTest.exampleQuestion();
-        questionDao.save(question1);
-        questionDao.save(question2);
-
-
-        //Still fails because not decoded correctly
-
-        
-        HttpClient client = new HttpClient("localhost", server.getPort(), "/api/question");
-        assertThat(client.getMessageBody())
-                .contains("<h1>" + question1.getText() + ", " + question1.getTitle() + "</h1>")
-                .contains("<h1>" + question2.getText() + ", " + question2.getTitle() + "</h1>");
-
+        optionDao.deleteAll();
         questionDao.deleteAll();
     }
 }

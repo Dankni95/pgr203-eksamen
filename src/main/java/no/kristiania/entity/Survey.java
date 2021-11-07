@@ -1,9 +1,18 @@
-package no.kristiania.survey;
+package no.kristiania.entity;
 
-public class Question {
+public class Survey {
     private String title;
-    private String text;
+    private long userId;
     private long id;
+
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public long getId() {
         return id;
@@ -21,11 +30,4 @@ public class Question {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 }
