@@ -1,13 +1,10 @@
 package no.kristiania.controllers;
 
-import no.kristiania.dao.OptionDao;
-import no.kristiania.dao.QuestionDao;
 import no.kristiania.dao.UserDao;
-import no.kristiania.entity.Option;
-import no.kristiania.entity.Question;
 import no.kristiania.entity.User;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpMessage;
+import no.kristiania.utils.Cookie;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -31,8 +28,9 @@ public class CreateUserController implements HttpController {
         user.setEmail(parameters.get("email"));
         userDao.save(user);
 
+        Cookie.setCookie(user);
 
-        return new HttpMessage("HTTP/1.1 303 See Other", "Location", "/newQuestion.html");
+        return new HttpMessage("HTTP/1.1 303 See Other", "Location", "/", "Set-cookie", "user=" + user.getCookie());
 
     }
 }

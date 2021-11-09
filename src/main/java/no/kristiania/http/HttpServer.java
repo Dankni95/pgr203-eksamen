@@ -80,8 +80,6 @@ public class HttpServer {
             fileResource.transferTo(buffer);
             String responseText = buffer.toString();
 
-            System.out.println(fileTarget);
-
             String contentType = "text/plain";
             if (fileTarget.endsWith(".html") || fileTarget.equals("/index.html")) {
                 contentType = "text/html";

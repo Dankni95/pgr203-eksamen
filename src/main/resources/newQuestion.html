@@ -129,8 +129,8 @@
         <label for="surveys">Create question in survey: </label>
 
 
-        <select name="surveys" id="surveys">
-            <option value="previous" onload="removeDisabled()" onclick="removeDisabled()">Select previous survey</option>
+        <select name="surveys" id="surveys" onchange="removeDisabled()">
+            <option value="previous" onload="removeDisabled()">Select previous survey</option>
         </select>
         <br>
         <label for="new-survey">
@@ -203,8 +203,19 @@
         document.getElementById("surveys").innerHTML += text;
     })
 
+    fetch("/api/get-user")
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+            if (text == "500 INTERNAL SERVER ERROR"){
+                document.getElementById("user").value += "Anonymous";
+            }else{
+                document.getElementById("user").value += text;
+            }
+    })
+
+
     function removeDisabled() {
-        console.log("works")
         let newSurvey = document.getElementById("new-survey");
         let survey = document.getElementById("surveys");
         let user = document.getElementById("user")
@@ -228,10 +239,12 @@
     let count = 2;
 
     function addOption(button) {
-        let optionDiv = document.getElementsByClassName("form-control")[2];
+        let optionDiv = document.getElementsByClassName("form-control")[3];
         let form = document.getElementById("form")
-        console.log(form.length)
-        if (form.length < 9) {
+
+        if (form.length === 11) button.remove();
+
+        if (form.length <= 11) {
 
             let br = document.createElement("BR");
             optionDiv.insertAdjacentElement("beforeend", br)
@@ -248,8 +261,6 @@
             y.required = "true";
             optionDiv.insertAdjacentElement("beforeend", y)
             count++
-        } else {
-            button.remove()
         }
     }
 

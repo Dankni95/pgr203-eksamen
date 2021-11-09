@@ -29,6 +29,12 @@ public class HttpMessage {
         this.headerFields.put(headerField, headerValue);
     }
 
+    public HttpMessage(String startLine, String locationName, String locationValue, String cookieName, String cookieValue) {
+        this.startLine = startLine;
+        this.headerFields.put(locationName, locationValue);
+        this.headerFields.put(cookieName, cookieValue);
+    }
+
 
     public static Map<String, String> parseRequestParameters(String query) {
         Map<String, String> queryMap = new HashMap<>();
@@ -43,7 +49,6 @@ public class HttpMessage {
     }
 
     public static Map<String, String> parseGetRequestParameters(String query) {
-        System.out.println(query);
         Map<String, String> queryMap = new HashMap<>();
 
         if (query == null) System.out.println("Handle this null value");
@@ -106,6 +111,14 @@ public class HttpMessage {
                     "Connection: close\r\n" +
                     "\r\n" +
                     messageBody;
+        } else if (headerFields.containsKey("Set-cookie")) {
+            response = "HTTP/1.1 303 See Other" + "\r\n" +
+                    "Content-length: 0" + "\r\n" +
+                    "Location: " + headerFields.get("Location") + "\r\n" +
+                    "Set-cookie: " + headerFields.get("Set-cookie") + "\r\n" +
+                    "Connection: close\r\n" +
+                    "\r\n" +
+                    "\r\n";
         } else {
             response = "HTTP/1.1 303 See Other" + "\r\n" +
                     "Content-length: 0" + "\r\n" +
@@ -117,4 +130,5 @@ public class HttpMessage {
 
         clientSocket.getOutputStream().write(response.getBytes());
     }
+
 }

@@ -28,12 +28,11 @@ public class GetSurveyController implements HttpController {
         // check for null
 
         responseText.append("<h2>").append(parameters.get("title")).append("</h2>");
-        responseText.append("<form action=\"/api/answers\" method=\"POST\">");
+        responseText.append("<form action=\"/api/answer\" method=\"POST\">");
 
         for (int i = 1; i <= questionDao.listAll().size(); i++) {
             Question question = questionDao.retrieve(i);
 
-            System.out.println(Integer.parseInt(parameters.get("id").trim()));
             if (question.getSurveyId() == Integer.parseInt(parameters.get("id").trim())) {
 
                 responseText.append("<div class='form-control'>")
@@ -46,12 +45,17 @@ public class GetSurveyController implements HttpController {
 
 
                 for (Option op : optionDao.listOptionsByQuestionId(i)) {
+                    //add checked
                     responseText
                             .append("<label for=\"").append(question.getTitle()).append("\">")
                             .append("<input type=\"radio\" name=\"").append(question.getTitle()).append("\"")
                             .append(" value=\"").append(op.getTitle()).append("\">")
                             //add checked
-                            .append(op.getTitle()).append("</input>");
+                            .append(op.getTitle()).append("</input>")
+                            .append("<input type=\"hidden\" name=\"").append("survey").append("\"")
+                            .append(" value=\"").append(parameters.get("title")).append("=").append(parameters.get("id")).append("\">")
+                            .append("</input>");
+
                 }
                 responseText.append("<br><hr>").append("</div>");
             }

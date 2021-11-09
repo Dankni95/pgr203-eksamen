@@ -4,7 +4,16 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String cookie;
     private long id;
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
 
     public long getId() {
         return id;
