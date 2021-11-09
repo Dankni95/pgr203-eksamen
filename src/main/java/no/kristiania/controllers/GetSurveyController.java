@@ -1,5 +1,7 @@
 package no.kristiania.controllers;
 
+import no.kristiania.dao.SurveyDao;
+import no.kristiania.dao.UserDao;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpMessage;
 import no.kristiania.entity.Option;
@@ -13,10 +15,14 @@ import java.util.Map;
 public class GetSurveyController implements HttpController {
     private final OptionDao optionDao;
     private final QuestionDao questionDao;
+    private final UserDao userDao;
+    private final SurveyDao surveyDao;
 
-    public GetSurveyController(OptionDao optionDao, QuestionDao questionDao) {
+    public GetSurveyController(OptionDao optionDao, QuestionDao questionDao, UserDao userDao, SurveyDao surveyDao) {
         this.optionDao = optionDao;
         this.questionDao = questionDao;
+        this.userDao = userDao;
+        this.surveyDao = surveyDao;
     }
 
     @Override
@@ -27,7 +33,10 @@ public class GetSurveyController implements HttpController {
 
         // check for null
 
-        responseText.append("<h2>").append(parameters.get("title")).append("</h2>");
+
+        responseText.append("<h2>").append(parameters.get("title")).append("</h2>")
+                .append("<p style=\"text-align: center;\">").append("Survey created by ").append(userDao.retrieve(surveyDao.retrieve(Integer.parseInt(parameters.get("id"))).getUserId()).getFirstName()).append("</p>");
+
         responseText.append("<form action=\"/api/answer\" method=\"POST\">");
 
         for (int i = 1; i <= questionDao.listAll().size(); i++) {
@@ -36,6 +45,7 @@ public class GetSurveyController implements HttpController {
             if (question.getSurveyId() == Integer.parseInt(parameters.get("id").trim())) {
 
                 responseText.append("<div class='form-control'>")
+                        .append("<p style>").append("Question created by ").append(userDao.retrieve(question.getUserId()).getFirstName()).append("</p>")
                         .append("<h2>")
                         .append(question.getTitle())
                         .append("</h2>")
