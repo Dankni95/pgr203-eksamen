@@ -47,9 +47,11 @@ public class AnswerController implements HttpController {
         /*Find the id of chosen option and set it to be option id in answers table*/
 
 
-        answer.setUser_survey_id(Integer.parseInt(parameters.get("user_survey_id")));
-        answer.setQuestion_id(Integer.parseInt(parameters.get("question_id")));
-        answer.setOption_id(Integer.parseInt(parameters.get("option_id")));
+        answer.setUserSurveyId(Integer.parseInt(parameters.get("surveyId")));
+        answer.setQuestionId(Integer.parseInt(parameters.get("questionId")));
+
+
+        answer.setOptionTitle(parameters.get("optionTitle"));
         answerDao.save(answer);
 
 

@@ -207,11 +207,11 @@
         .then(function (response) {
             return response.text();
         }).then(function (text) {
-            if (text === "500 INTERNAL SERVER ERROR"){
-                document.getElementById("user").value += "Anonymous";
-            }else{
-                document.getElementById("user").value += text;
-            }
+        if (text === "500 INTERNAL SERVER ERROR"){
+            document.getElementById("user").value += "Anonymous";
+        }else{
+            document.getElementById("user").value += text;
+        }
     })
 
 

@@ -2,9 +2,9 @@ package no.kristiania.entity;
 
 public class Answer {
     private long id;
-    private long user_survey_id;
-    private long question_id;
-    private long option_id;
+    private long userSurveyId;
+    private long questionId;
+    private String optionTitle;
 
     public long getId() {
         return id;
@@ -14,27 +14,27 @@ public class Answer {
         this.id = id;
     }
 
-    public long getUser_survey_id() {
-        return user_survey_id;
+    public long getUserSurveyId() {
+        return userSurveyId;
     }
 
-    public void setUser_survey_id(long user_survey_id) {
-        this.user_survey_id = user_survey_id;
+    public void setUserSurveyId(long userSurveyId) {
+        this.userSurveyId = userSurveyId;
     }
 
-    public long getQuestion_id() {
-        return question_id;
+    public long getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion_id(long question_id) {
-        this.question_id = question_id;
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
     }
 
-    public long getOption_id() {
-        return option_id;
+    public String getOptionTitle() {
+        return optionTitle;
     }
 
-    public void setOption_id(long option_id) {
-        this.option_id = option_id;
+    public void setOptionTitle(String optionTitle) {
+        this.optionTitle = optionTitle;
     }
 }

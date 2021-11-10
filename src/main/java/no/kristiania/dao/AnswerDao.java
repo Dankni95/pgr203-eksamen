@@ -15,9 +15,9 @@ public class AnswerDao extends AbstractDao<Answer> {
     protected Answer readFromResultSet(ResultSet rs) throws SQLException {
         Answer answer = new Answer();
         answer.setId(rs.getLong("id"));
-        answer.setUser_survey_id(rs.getLong("user_survey_id"));
-        answer.setQuestion_id(rs.getLong("question_id"));
-        answer.setOption_id(rs.getLong("option_id"));
+        answer.setUserSurveyId(rs.getLong("user_survey_id"));
+        answer.setQuestionId(rs.getLong("question_id"));
+        answer.setQuestionId(rs.getLong("option_id")); //BYTT
         return answer;
 
     }
@@ -28,9 +28,9 @@ public class AnswerDao extends AbstractDao<Answer> {
                     "insert into user_survey_answer (user_survey_id, question_id, option_id) values (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             )) {
-                statement.setLong(1, answer.getUser_survey_id());
-                statement.setLong(2, answer.getQuestion_id());
-                statement.setLong(3, answer.getOption_id());
+                statement.setLong(1, answer.getUserSurveyId());
+                statement.setLong(2, answer.getQuestionId());
+                statement.setLong(3, answer.getQuestionId()); //BYTT
                 statement.executeUpdate();
 
                 try (ResultSet rs = statement.getGeneratedKeys()) {
