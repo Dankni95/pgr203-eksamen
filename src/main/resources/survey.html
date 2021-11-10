@@ -116,24 +116,32 @@
 <h1>Survey</h1>
 
 
+<div id="question" class="form-control"></div>
 
-    <div id="question" class="form-control"></div>
 
-
+<div id="edit" class="form-control"></div>
 
 <button id="btn">
     <a href="/newQuestion.html">Add new now</a>
 </button>
 
+
 <script>
 
 
-        fetch("/api/get-specific-survey")
-            .then(function (response) {
-                return response.text();
-            }).then(function (text) {
-            document.getElementById("question").innerHTML = text;
-        })
+    fetch("/api/questions")
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+        document.getElementById("question").innerHTML = text;
+    })
+
+    fetch("/api/edit")
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+        document.getElementById("edit").innerHTML = text;
+    })
 
 
 </script>

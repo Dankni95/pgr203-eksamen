@@ -30,6 +30,7 @@ public class CreateSurveyController implements HttpController {
     @Override
     public HttpMessage handle(HttpMessage request) throws SQLException {
         Map<String, String> parameters = HttpMessage.parseRequestParameters(request.messageBody);
+        System.out.println(parameters);
 
 
         String surveyTitle;
@@ -62,6 +63,8 @@ public class CreateSurveyController implements HttpController {
 
         question.setSurveyId(surveyDao.retrieveSurveyIdbyTitle(surveyTitle));
         questionDao.save(question);
+
+
 
         Option option = new Option();
         option.setTitle(parameters.get("option_1"));

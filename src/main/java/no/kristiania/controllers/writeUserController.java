@@ -15,7 +15,8 @@ public class writeUserController implements HttpController {
         String messageBody;
         String firstName;
         String lastName;
-        if (!request.headerFields.get("Cookie").isEmpty()) {
+
+        if (request.headerFields.get("Cookie").isEmpty()) {
             firstName = Cookie.getUser(request.headerFields.get("Cookie").split("=")[1]).getFirstName();
             lastName = Cookie.getUser(request.headerFields.get("Cookie").split("=")[1]).getLastName();
         } else {
@@ -24,6 +25,7 @@ public class writeUserController implements HttpController {
         }
 
         messageBody = firstName + " " + lastName;
+        System.out.println(messageBody);
 
         return new HttpMessage("HTTP/1.1 200 OK", messageBody);
     }

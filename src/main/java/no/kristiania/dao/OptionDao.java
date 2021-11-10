@@ -17,8 +17,8 @@ public class OptionDao extends AbstractDao<Option> {
     @Override
     protected Option readFromResultSet(ResultSet rs) throws SQLException {
         Option option = new Option();
-        option.setTitle(rs.getString("option_title"));
         option.setQuestionId(rs.getLong("question_id"));
+        option.setTitle(rs.getString("option_title"));
         option.setId(rs.getLong("id"));
         return option;
     }

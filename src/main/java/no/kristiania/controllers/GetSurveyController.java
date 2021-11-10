@@ -28,16 +28,15 @@ public class GetSurveyController implements HttpController {
     @Override
     public HttpMessage handle(HttpMessage request) throws SQLException {
 
-        Map<String, String> parameters = HttpMessage.parseGetRequestParameters(request.getHeader("Referer"));
-        StringBuilder responseText = new StringBuilder();
 
-        // check for null
+        Map<String, String> parameters = HttpMessage.parseRequestParameters(request.getHeader("Referer"));
+        StringBuilder responseText = new StringBuilder();
 
 
         responseText.append("<h2>").append(parameters.get("title")).append("</h2>")
                 .append("<p style=\"text-align: center;\">").append("Survey created by ").append(userDao.retrieve(surveyDao.retrieve(Integer.parseInt(parameters.get("id"))).getUserId()).getFirstName()).append("</p>");
 
-        responseText.append("<form action=\"/api/answer\" method=\"POST\">");
+        responseText.append("<form action=\"/api/questions\" method=\"POST\">");
 
         for (int i = 1; i <= questionDao.listAll().size(); i++) {
             Question question = questionDao.retrieve(i);
@@ -55,25 +54,43 @@ public class GetSurveyController implements HttpController {
 
 
                 for (Option op : optionDao.listOptionsByQuestionId(i)) {
-                    //add checked
-                    responseText
-                            .append("<label for=\"").append(question.getTitle()).append("\">")
-                            .append("<input type=\"radio\" name=\"").append(question.getTitle()).append("\"")
-                            .append(" value=\"").append(op.getTitle()).append("\">")
-                            //add checked
-                            .append(op.getTitle()).append("</input>")
-                            .append("<input type=\"hidden\" name=\"").append("survey").append("\"")
-                            .append(" value=\"").append(parameters.get("title")).append("=").append(parameters.get("id")).append("\">")
-                            .append("</input>");
+                    writeOptions(parameters, responseText, question, op);
 
                 }
-                responseText.append("<br><hr>").append("</div>");
+                responseText.append("<br><hr>").append("</div>")
+                        .append("<br>")
+                        .append("<button type=\"submit\" value=\"Submit\">\n").append("Submit").append("</button>").append("</form>");
             }
+
         }
-        responseText.append("<br>")
-                .append("<button type=\"submit\" value=\"Submit\">\n").append("Submit").append("</button>").append("</form>");
+
         return new HttpMessage("HTTP/1.1 200 OK", responseText.toString());
 
+    }
+
+
+
+    private void writeOptions(Map<String, String> parameters, StringBuilder responseText, Question question, Option op) {
+        responseText
+                .append("<label for=\"").append(question.getTitle()).append("\">")
+                .append("<input type=\"radio\" name=\"").append(question.getTitle()).append("\"")
+                .append(" value=\"").append(op.getTitle()).append("\">")
+                .append(op.getTitle()).append("</input>")
+                .append("<input type=\"hidden\" name=\"").append("questionId").append("\"")
+                .append(" value=\"").append(question.getId()).append("\">")
+                .append("</input>")
+                .append("<input type=\"hidden\" name=\"").append("optionId").append("\"")
+                .append(" value=\"").append(op.getId()).append("\">")
+                .append("</input>")
+
+                //OPTION ID IS INCORRECT
+
+                .append("<input type=\"hidden\" name=\"").append("surveyId").append("\"")
+                .append(" value=\"").append(parameters.get("id")).append("\">")
+                .append("</input>")
+                .append("<input type=\"hidden\" name=\"").append("survey").append("\"")
+                .append(" value=\"").append(parameters.get("title")).append("=").append(parameters.get("id")).append("\">")
+                .append("</input>");
     }
 }
 

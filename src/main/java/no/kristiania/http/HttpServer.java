@@ -62,6 +62,20 @@ public class HttpServer {
             fileTarget = requestTarget;
         }
 
+        if (httpMessage.startLine.startsWith("GET")){
+            if (controllers.containsKey("GET "+fileTarget)) {
+                HttpMessage response = controllers.get("GET "+fileTarget).handle(httpMessage);
+                response.write(clientSocket);
+                return;
+            }
+        }else if (httpMessage.startLine.startsWith("POST")){
+            if (controllers.containsKey("POST "+fileTarget)) {
+                HttpMessage response = controllers.get("POST "+fileTarget).handle(httpMessage);
+                response.write(clientSocket);
+                return;
+            }
+        }
+
 
         if (controllers.containsKey(fileTarget)) {
             HttpMessage response = controllers.get(fileTarget).handle(httpMessage);

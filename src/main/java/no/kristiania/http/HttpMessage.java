@@ -38,31 +38,33 @@ public class HttpMessage {
 
     public static Map<String, String> parseRequestParameters(String query) {
         Map<String, String> queryMap = new HashMap<>();
-        if (query == null) System.out.println("Handle this null value");
-        for (String queryParameter : query.split("&")) {
-            int equalsPos = queryParameter.indexOf('=');
-            String parameterName = queryParameter.substring(0, equalsPos).replaceAll("\\+", " ");
-            String parameterValue = queryParameter.substring(equalsPos + 1).replaceAll("\\+", " ");
-            queryMap.put(parameterName, parameterValue);
+
+        if (query != null && !query.contains("?")) {
+            System.out.println("post "+query);
+            for (String queryParameter : query.split("&")) {
+                int equalsPos = queryParameter.indexOf('=');
+                String parameterName = queryParameter.substring(0, equalsPos).replaceAll("\\+", " ");
+                String parameterValue = queryParameter.substring(equalsPos + 1).replaceAll("\\+", " ");
+                queryMap.put(parameterName, parameterValue);
+
+            }
+            return queryMap;
+        } else {
+            assert query != null;
+            System.out.println("get "+query);
+            String queryParameter = query.split("\\?")[1];
+            String queryParameterName = queryParameter.split("=")[0];
+            String queryParameterValue = queryParameter.split("=")[1].split("HTTP")[0];
+
+
+            queryMap.put("title", queryParameterName);
+            queryMap.put("id", queryParameterValue);
+
+            return queryMap;
         }
-        return queryMap;
     }
 
-    public static Map<String, String> parseGetRequestParameters(String query) {
-        Map<String, String> queryMap = new HashMap<>();
 
-        if (query == null) System.out.println("Handle this null value");
-        String queryParameter = query.split("\\?")[1];
-        String queryParameterName = queryParameter.split("=")[0];
-        String queryParameterValue = queryParameter.split("=")[1].split("HTTP")[0];
-
-
-        queryMap.put("title", queryParameterName);
-        queryMap.put("id", queryParameterValue);
-
-
-        return queryMap;
-    }
 
     static String readBytes(Socket socket, int contentLength) throws IOException {
         StringBuilder buffer = new StringBuilder();
@@ -105,6 +107,7 @@ public class HttpMessage {
 
     public void write(Socket clientSocket) throws IOException {
         String response;
+        System.out.println(headerFields.get("Set-cookie"));
         if (headerFields.isEmpty()) {
             response = startLine + "\r\n" +
                     "Content-Length: " + messageBody.length() + "\r\n" +

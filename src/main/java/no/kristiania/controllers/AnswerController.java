@@ -23,6 +23,7 @@ public class AnswerController implements HttpController {
 
 
         // Not implemented yet!
+        System.out.println(parameters);
 
 
         return new HttpMessage("HTTP/1.1 303 See Other", "Location", "/survey.html?" + parameters.get("survey"));
