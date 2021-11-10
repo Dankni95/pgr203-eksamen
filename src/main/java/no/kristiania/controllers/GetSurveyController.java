@@ -69,7 +69,6 @@ public class GetSurveyController implements HttpController {
     }
 
 
-
     private void writeOptions(Map<String, String> parameters, StringBuilder responseText, Question question, Option op) {
         responseText
                 .append("<label for=\"").append(question.getTitle()).append("\">")
@@ -78,9 +77,6 @@ public class GetSurveyController implements HttpController {
                 .append(op.getTitle()).append("</input>")
                 .append("<input type=\"hidden\" name=\"").append("questionId").append("\"")
                 .append(" value=\"").append(question.getId()).append("\">")
-                .append("</input>")
-                .append("<input type=\"hidden\" name=\"").append("optionId").append("\"")
-                .append(" value=\"").append(op.getId()).append("\">")
                 .append("</input>")
 
                 //OPTION ID IS INCORRECT

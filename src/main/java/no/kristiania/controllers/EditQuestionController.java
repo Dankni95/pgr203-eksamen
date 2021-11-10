@@ -22,7 +22,6 @@ public class EditQuestionController implements HttpController {
 
 
         Map<String, String> parameters = HttpMessage.parseRequestParameters(request.getHeader("Referer"));
-        System.out.println("EditQ: "+parameters);
         StringBuilder responseText = new StringBuilder();
 
         writeEditHeader(responseText);

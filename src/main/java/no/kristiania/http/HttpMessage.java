@@ -40,7 +40,6 @@ public class HttpMessage {
         Map<String, String> queryMap = new HashMap<>();
 
         if (query != null && !query.contains("?")) {
-            System.out.println("post "+query);
             for (String queryParameter : query.split("&")) {
                 int equalsPos = queryParameter.indexOf('=');
                 String parameterName = queryParameter.substring(0, equalsPos).replaceAll("\\+", " ");
@@ -48,10 +47,8 @@ public class HttpMessage {
                 queryMap.put(parameterName, parameterValue);
 
             }
-            return queryMap;
         } else {
             assert query != null;
-            System.out.println("get "+query);
             String queryParameter = query.split("\\?")[1];
             String queryParameterName = queryParameter.split("=")[0];
             String queryParameterValue = queryParameter.split("=")[1].split("HTTP")[0];
@@ -60,8 +57,8 @@ public class HttpMessage {
             queryMap.put("title", queryParameterName);
             queryMap.put("id", queryParameterValue);
 
-            return queryMap;
         }
+        return queryMap;
     }
 
 
@@ -107,7 +104,6 @@ public class HttpMessage {
 
     public void write(Socket clientSocket) throws IOException {
         String response;
-        System.out.println(headerFields.get("Set-cookie"));
         if (headerFields.isEmpty()) {
             response = startLine + "\r\n" +
                     "Content-Length: " + messageBody.length() + "\r\n" +

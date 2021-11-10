@@ -1,10 +1,7 @@
 package no.kristiania.http;
 
 import no.kristiania.controllers.*;
-import no.kristiania.dao.OptionDao;
-import no.kristiania.dao.QuestionDao;
-import no.kristiania.dao.SurveyDao;
-import no.kristiania.dao.UserDao;
+import no.kristiania.dao.*;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.slf4j.Logger;
@@ -27,6 +24,7 @@ public class PersonnelServer {
         OptionDao optionDao = new OptionDao(dataSource);
         SurveyDao surveyDao = new SurveyDao(dataSource);
         UserDao userDao = new UserDao(dataSource);
+        AnswerDao answerDao = new AnswerDao(dataSource);
 
 
         httpServer.addController("/error", new ErrorController());
@@ -35,7 +33,7 @@ public class PersonnelServer {
         httpServer.addController("/api/question", new ListQuestionController(questionDao));
         httpServer.addController("/api/newQuestion", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
         httpServer.addController("GET /api/questions", new GetSurveyController(optionDao, questionDao, userDao, surveyDao));
-        httpServer.addController("POST /api/questions", new AnswerController(questionDao));
+        httpServer.addController("POST /api/questions", new AnswerController(questionDao,answerDao));
         httpServer.addController("/api/edit", new EditQuestionController(questionDao));
         httpServer.addController("/api/surveys", new writeAllSurveysController(surveyDao));
         httpServer.addController("/api/all-surveys", new ListAllSurveysAsOptionsController(surveyDao));

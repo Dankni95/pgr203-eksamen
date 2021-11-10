@@ -65,7 +65,6 @@ public class CreateSurveyController implements HttpController {
         questionDao.save(question);
 
 
-
         Option option = new Option();
         option.setTitle(parameters.get("option_1"));
         option.setQuestionId(question.getId());
