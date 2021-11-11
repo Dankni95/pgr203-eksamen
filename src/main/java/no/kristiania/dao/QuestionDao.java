@@ -50,6 +50,21 @@ public class QuestionDao extends AbstractDao<Question> {
         }
     }
 
+    public void update(Question question) throws SQLException {
+
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "update question set (question_title, question_text) = (?,?) where id = (?)"
+            )) {
+                statement.setString(1, question.getTitle());
+                statement.setString(2, question.getText());
+                statement.setLong(3, question.getId());
+
+                statement.executeUpdate();
+            }
+        }
+    }
+
 
     @Override
     public List<Question> listAll() throws SQLException {
