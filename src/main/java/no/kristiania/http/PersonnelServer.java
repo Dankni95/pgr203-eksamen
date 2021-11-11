@@ -30,16 +30,21 @@ public class PersonnelServer {
         httpServer.addController("/error", new ErrorController());
 
 
-        httpServer.addController("/api/question", new ListQuestionController(questionDao));
-        httpServer.addController("/api/newQuestion", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
-        httpServer.addController("GET /api/questions", new GetSurveyController(optionDao, questionDao, userDao, surveyDao));
-        httpServer.addController("POST /api/questions", new AnswerController(questionDao,answerDao));
-        httpServer.addController("POST /api/edit", new EditQuestionController(answerDao));
-        httpServer.addController("/api/edit", new WriteEditQuestionController(questionDao));
-        httpServer.addController("/api/surveys", new writeAllSurveysController(surveyDao));
-        httpServer.addController("/api/all-surveys", new ListAllSurveysAsOptionsController(surveyDao));
-        httpServer.addController("/api/get-user", new writeUserController());
-        httpServer.addController("/api/user", new CreateUserController(userDao));
+        httpServer.addController("POST /api/new-survey", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
+        httpServer.addController("POST /api/questions", new CreateAnswerController(questionDao,answerDao));
+        httpServer.addController("POST /api/edit", new CreateEditQuestionController(questionDao));
+        httpServer.addController("POST /api/user", new CreateUserController(userDao));
+
+        
+
+
+        httpServer.addController("GET /api/questions", new WriteGetSurveyController(optionDao, questionDao, userDao, surveyDao));
+        httpServer.addController("GET /api/edit", new WriteEditQuestionController(questionDao));
+        httpServer.addController("GET /api/surveys", new writeAllSurveysController(surveyDao));
+        httpServer.addController("GET /api/all-surveys", new WriteAllSurveysAsOptionsController(surveyDao));
+        httpServer.addController("GET /api/user", new WriteUserController());
+
+
 
 
         logger.info("Started http://localhost:{}/", httpServer.getPort());

@@ -1,5 +1,7 @@
 package no.kristiania.http;
 
+import no.kristiania.utils.Cookie;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -116,6 +118,7 @@ public class HttpServer {
     }
 
     private void writeOkResponse(Socket clientSocket, String responseText, String contentType) throws IOException {
+
         String response = "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + responseText.length() + "\r\n" +
                 "Content-Type: " + contentType + "\r\n" +

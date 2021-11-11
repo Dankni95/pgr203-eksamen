@@ -1,8 +1,6 @@
 package no.kristiania.controllers;
 
-import no.kristiania.dao.OptionDao;
 import no.kristiania.dao.SurveyDao;
-import no.kristiania.entity.Option;
 import no.kristiania.entity.Survey;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpMessage;
@@ -22,8 +20,6 @@ public class writeAllSurveysController implements HttpController {
             return new HttpMessage("HTTP/1.1 200 OK", "<h3 style=\"text-align:center;\">There is no surveys at this time, create a survey</h3>");
         } else {
             StringBuilder responseText = new StringBuilder();
-
-            // check for null
 
             responseText.append("<form action=\"/survey.html\" method=\"GET\">")
                     .append("<label value=\"").append("sELECT").append("\">").append("Choose survey to answer").append("</label>");

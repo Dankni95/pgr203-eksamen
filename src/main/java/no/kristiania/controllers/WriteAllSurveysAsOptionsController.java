@@ -9,10 +9,10 @@ import no.kristiania.http.HttpMessage;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ListAllSurveysAsOptionsController implements HttpController {
+public class WriteAllSurveysAsOptionsController implements HttpController {
     private final SurveyDao surveyDao;
 
-    public ListAllSurveysAsOptionsController(SurveyDao surveyDao) {
+    public WriteAllSurveysAsOptionsController(SurveyDao surveyDao) {
         this.surveyDao = surveyDao;
     }
 

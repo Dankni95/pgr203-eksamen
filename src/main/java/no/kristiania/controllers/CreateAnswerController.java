@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class AnswerController implements HttpController {
+public class CreateAnswerController implements HttpController {
     private final QuestionDao questionDao;
     private final AnswerDao answerDao;
 
-    public AnswerController(QuestionDao questionDao, AnswerDao answerDao) {
+    public CreateAnswerController(QuestionDao questionDao, AnswerDao answerDao) {
         this.questionDao = questionDao;
         this.answerDao = answerDao;
     }

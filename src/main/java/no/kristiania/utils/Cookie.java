@@ -2,7 +2,6 @@ package no.kristiania.utils;
 
 import no.kristiania.entity.User;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 

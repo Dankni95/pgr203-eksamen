@@ -30,7 +30,6 @@ public class CreateSurveyController implements HttpController {
     @Override
     public HttpMessage handle(HttpMessage request) throws SQLException {
         Map<String, String> parameters = HttpMessage.parseRequestParameters(request.messageBody);
-        System.out.println(parameters);
 
 
         String surveyTitle;

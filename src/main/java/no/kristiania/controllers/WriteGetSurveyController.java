@@ -12,13 +12,13 @@ import no.kristiania.dao.QuestionDao;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class GetSurveyController implements HttpController {
+public class WriteGetSurveyController implements HttpController {
     private final OptionDao optionDao;
     private final QuestionDao questionDao;
     private final UserDao userDao;
     private final SurveyDao surveyDao;
 
-    public GetSurveyController(OptionDao optionDao, QuestionDao questionDao, UserDao userDao, SurveyDao surveyDao) {
+    public WriteGetSurveyController(OptionDao optionDao, QuestionDao questionDao, UserDao userDao, SurveyDao surveyDao) {
         this.optionDao = optionDao;
         this.questionDao = questionDao;
         this.userDao = userDao;

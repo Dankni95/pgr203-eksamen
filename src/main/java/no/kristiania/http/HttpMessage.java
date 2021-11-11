@@ -104,6 +104,7 @@ public class HttpMessage {
 
     public void write(Socket clientSocket) throws IOException {
         String response;
+
         if (headerFields.isEmpty()) {
             response = startLine + "\r\n" +
                     "Content-Length: " + messageBody.length() + "\r\n" +
