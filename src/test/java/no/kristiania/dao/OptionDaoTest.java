@@ -11,7 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class OptionDaoTest {
+    private final QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
     private final OptionDao optionDao = new OptionDao(TestData.testDataSource());
+    private final SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
     private static Option option;
     private static Survey survey;
     private static Question question;
@@ -95,5 +97,33 @@ public class OptionDaoTest {
         optionDao.deleteAll();
 
         assertNull(optionDao.retrieve(option.getId()));
+    }
+
+    @Test
+    void shouldListOptionsByQuestionId() throws SQLException {
+        optionDao.deleteAll();
+
+        survey = new Survey();
+        survey.setUserId(1); // Annon
+        survey.setTitle("Test survey name");
+        surveyDao.save(survey);
+
+        question = new Question();
+        question.setTitle("Test question name");
+        question.setText("Test subtitle name");
+        question.setUserId(1);
+        question.setSurveyId(survey.getId());
+
+        questionDao.save(question);
+
+        option = new Option();
+        option.setTitle("Option 1");
+        option.setQuestionId(question.getId());
+
+        optionDao.save(option);
+
+        assertThat(optionDao.listOptionsByQuestionId(1))
+                .extracting(Option::getQuestionId)
+                .contains(option.getQuestionId());
     }
 }
