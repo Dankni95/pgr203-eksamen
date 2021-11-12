@@ -154,6 +154,9 @@
 
     <div id="question" class="form-control"></div>
 
+<div id="answers" class="form-control"></div>
+
+
 
 
 <button id="btn">
@@ -169,6 +172,14 @@
             }).then(function (text) {
             document.getElementById("question").innerHTML = text;
         })
+
+        fetch("/api/answers")
+            .then(function (response) {
+                return response.text();
+            }).then(function (text) {
+            document.getElementById("answers").innerHTML = text;
+        })
+
 
 
 </script>

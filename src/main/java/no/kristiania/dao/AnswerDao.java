@@ -15,9 +15,9 @@ public class AnswerDao extends AbstractDao<Answer> {
     protected Answer readFromResultSet(ResultSet rs) throws SQLException {
         Answer answer = new Answer();
         answer.setId(rs.getLong("id"));
-        answer.setUserSurveyId(rs.getLong("user_survey_id"));
+        answer.setUserId(rs.getLong("user_id"));
         answer.setQuestionId(rs.getLong("question_id"));
-        answer.setQuestionId(rs.getLong("option_id")); //BYTT
+        answer.setOptionId(rs.getLong("option_id"));
         return answer;
 
     }
@@ -25,12 +25,12 @@ public class AnswerDao extends AbstractDao<Answer> {
     public void save(Answer answer) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(
-                    "insert into user_survey_answer (user_survey_id, question_id, option_id) values (?, ?, ?)",
+                    "insert into user_survey_answer (user_id, question_id, option_id) values (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             )) {
-                statement.setLong(1, answer.getUserSurveyId());
+                statement.setLong(1, answer.getUserId());
                 statement.setLong(2, answer.getQuestionId());
-                statement.setLong(3, answer.getQuestionId()); //BYTT
+                statement.setLong(3, answer.getOptionId());
                 statement.executeUpdate();
 
                 try (ResultSet rs = statement.getGeneratedKeys()) {
@@ -57,7 +57,7 @@ public class AnswerDao extends AbstractDao<Answer> {
 
     public Long retrieveAnswerIdByUserSurvey(long id) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT id FROM user_survey_answer WHERE user_survey_id = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT id FROM user_survey_answer WHERE option_id = ?")) {
                 statement.setLong(1, id);
                 try (ResultSet rs = statement.executeQuery()) {
                     rs.next();

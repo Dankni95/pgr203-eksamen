@@ -21,8 +21,16 @@ public class CreateEditQuestionController implements HttpController {
         Map<String, String> parameters = HttpMessage.parseRequestParameters(request.messageBody);
 
         Question question = questionDao.retrieve(Integer.parseInt(parameters.get("questionId")));
-        question.setTitle(parameters.get("newQuestionName"));
-        question.setText(parameters.get("newQuestionSubtitle"));
+        String newTitle = parameters.get("newQuestionName");
+        String newSubtitle = parameters.get("newQuestionSubtitle");
+
+        if (newTitle.equals("")) {
+            // if empty do nothing
+        } else question.setTitle(newTitle);
+
+        if (newSubtitle.equals("")) {
+        } else question.setText(newSubtitle);
+
         questionDao.update(question);
 
         return new HttpMessage("HTTP/1.1 303 See Other", "Location", "/survey.html?" + parameters.get("survey"));
