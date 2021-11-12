@@ -17,6 +17,7 @@ class OptionDaoTest {
 
         Option option = new Option();
         option.setTitle(option1);
+        option.setQuestionId(1);
         dao.save(option);
 
         Option op = new Option();

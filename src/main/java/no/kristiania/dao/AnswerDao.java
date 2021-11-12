@@ -54,18 +54,6 @@ public class AnswerDao extends AbstractDao<Answer> {
     public Answer retrieve(long id) throws SQLException {
         return super.retrieve("SELECT * FROM user_survey_answer WHERE id = ?", id);
     }
-
-    public Long retrieveAnswerIdByUserSurvey(long id) throws SQLException {
-        try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT id FROM user_survey_answer WHERE option_id = ?")) {
-                statement.setLong(1, id);
-                try (ResultSet rs = statement.executeQuery()) {
-                    rs.next();
-                    return rs.getLong(1);
-                }
-            }
-        }
-    }
 }
 
 

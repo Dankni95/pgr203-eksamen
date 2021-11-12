@@ -6,6 +6,7 @@ import no.kristiania.controllers.OptionsController;
 import no.kristiania.entity.Option;
 import no.kristiania.entity.Question;
 import no.kristiania.dao.*;
+import no.kristiania.entity.Survey;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -66,26 +67,60 @@ class HttpServerTest {
 
     @Test
     void shouldReturnOptionsFromServer() throws IOException, SQLException {
+        QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
         OptionDao optionDao = new OptionDao(TestData.testDataSource());
-        Option option = new Option();
-        Option option2 = new Option();
-        Question question = new Question();
-        Question question2 = new Question();
+        SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
 
-        option.setTitle("Teacher");
-        option.setQuestionId(1);
-        option2.setTitle("Student");
-        option2.setQuestionId(1);
+        Survey survey = new Survey();
+        survey.setUserId(1); // Annon
+        survey.setTitle("Test survey name");
+        surveyDao.save(survey);
+
+        Question question = new Question();
+        question.setTitle("Test question name");
+        question.setText("Test subtitle name");
+        question.setUserId(1);
+        question.setSurveyId(survey.getId());
+
+        questionDao.save(question);
+
+        Option option = new Option();
+        option.setTitle("Option 1");
+        option.setQuestionId(question.getId());
+
+        Option option2 = new Option();
+        option2.setTitle("Option 2");
+        option2.setQuestionId(question.getId());
+
+        Option option3 = new Option();
+        option3.setTitle("Option 3");
+        option3.setQuestionId(question.getId());
+
+        Option option4 = new Option();
+        option4.setTitle("Option 4");
+        option4.setQuestionId(question.getId());
+
+        Option option5 = new Option();
+        option5.setTitle("Option 5");
+        option5.setQuestionId(question.getId());
+
+
+
 
 
         optionDao.save(option);
         optionDao.save(option2);
+        optionDao.save(option3);
+        optionDao.save(option4);
+        optionDao.save(option5);
+
+
 
         server.addController("/api/option", new OptionsController(optionDao));
-        
+
         HttpClient client = new HttpClient("localhost", server.getPort(), "/api/option");
         assertEquals(
-                "<option value=1>Teacher</option><option value=2>Student</option>",
+                "<option value=1>Option 1</option><option value=2>Option 2</option><option value=3>Option 3</option><option value=4>Option 4</option><option value=5>Option 5</option>",
                 client.getMessageBody()
         );
     }
@@ -98,26 +133,26 @@ class HttpServerTest {
         UserDao userDao = new UserDao(TestData.testDataSource());
         SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
 
-        server.addController("/api/newQuestion", new CreateSurveyController(questionDao,optionDao,userDao,surveyDao));
+        server.addController("POST /api/new-survey", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
         
         
         HttpPostClient postClient = new HttpPostClient(
                 "localhost",
                 server.getPort(),
-                "/api/newQuestion",
-                "text=Persson&title=Test&option_1=option"
+                "/api/new-survey",
+                "surveys=previous&new-survey=New+survey&user=Anonymous+&title=Question+title&text=Question+subtitle&option_1=Option+1&option_2=Option+2&option_3=Option+3&option_4=Option+4&option_5=Option+5"
         );
         assertEquals(303, postClient.getStatusCode());
         
         assertThat(questionDao.listAll())
                 .anySatisfy(p -> {
-                    assertThat(p.getTitle()).isEqualTo("Test");
-                    assertThat(p.getText()).isEqualTo("Persson");
+                    assertThat(p.getTitle()).isEqualTo("Question title");
+                    assertThat(p.getText()).isEqualTo("Question subtitle");
                 });
 
         assertThat(optionDao.listAll())
                 .anySatisfy(o -> {
-                    assertThat(o.getTitle()).isEqualTo("option");
+                    assertThat(o.getTitle()).isEqualTo("Option 1");
                     assertThat(o.getQuestionId()).isEqualTo(1);
                 });
 

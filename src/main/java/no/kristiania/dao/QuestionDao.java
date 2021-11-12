@@ -80,5 +80,4 @@ public class QuestionDao extends AbstractDao<Question> {
         return super.retrieve("SELECT * FROM question WHERE id =  ?", id);
     }
 
-    //Metode som saver/updater navn og subtitle. Bruk questionID og retrieve hele objectet og override forrige set.
 }
