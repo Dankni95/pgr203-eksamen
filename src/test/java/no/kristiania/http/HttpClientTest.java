@@ -59,7 +59,7 @@ public class HttpClientTest {
     @Test
     void shouldReadResponseBodyContentLength() throws IOException {
         HttpClient client = new HttpClient("localhost", 8080, "/");
-        assertEquals(1798, client.getContentLength());
+        assertEquals(1795, client.getContentLength());
     }
 
     @Test
