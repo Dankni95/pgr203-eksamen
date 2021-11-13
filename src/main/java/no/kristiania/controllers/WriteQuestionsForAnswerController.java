@@ -6,7 +6,6 @@ import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpMessage;
 
 import java.sql.SQLException;
-import java.util.Map;
 
 public class WriteQuestionsForAnswerController implements HttpController {
 
@@ -26,7 +25,7 @@ public class WriteQuestionsForAnswerController implements HttpController {
         writeAnswersHeader(responseText);
         writeAnswerBody(responseText);
 
-        responseText.append("<button type=\"submit\" onclick='showAnswers()' value=\"Submit\">\n").append("Go to selected question").append("</button>").append("</form>");
+        responseText.append("<button>").append("Go to selected question").append("</button>");
 
         return new HttpMessage("HTTP/1.1 200 OK", responseText.toString());
 
@@ -52,5 +51,3 @@ public class WriteQuestionsForAnswerController implements HttpController {
         responseText.append("</select>");
     }
 }
-
-

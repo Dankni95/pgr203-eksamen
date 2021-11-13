@@ -34,7 +34,14 @@ public class ListAnswersByQuestionController implements HttpController {
     public HttpMessage handle(HttpMessage request) throws SQLException, IOException {
         Map<String, String> parameters = HttpMessage.parseRequestParameters(request.messageBody);
 
-        String messageBody = "";
+        String messageBody = "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Answers</title>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body>";
 
         for (Option option : optionDao.listOptionsByQuestionId(Integer.parseInt(parameters.get("questionId")))) {
             for (Answer answer : answerDao.listAll()) {
@@ -49,6 +56,13 @@ public class ListAnswersByQuestionController implements HttpController {
             }
         }
         messageBody += "</div>";
+
+        if (messageBody.endsWith("<body></div>")){
+            messageBody += "<h1 style='text-align: center;'> There is no answers to this question </h1></body></html>";
+        }else {
+            messageBody += "</body></html>";
+        }
+
         return new HttpMessage("HTTP/1.1 200 OK", messageBody);
     }
 }

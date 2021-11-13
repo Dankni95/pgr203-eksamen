@@ -39,7 +39,7 @@ public class HttpMessage {
     public static Map<String, String> parseRequestParameters(String query) {
         Map<String, String> queryMap = new HashMap<>();
 
-        if (query != null && !query.contains("?")) {
+        if (query != null && !query.contains("/survey.html?")) {
             for (String queryParameter : query.split("&")) {
                 int equalsPos = queryParameter.indexOf('=');
                 String parameterName = queryParameter.substring(0, equalsPos).replaceAll("\\+", " ");
@@ -49,7 +49,7 @@ public class HttpMessage {
             }
         } else {
             assert query != null;
-            String queryParameter = query.split("\\?")[1];
+            String queryParameter = query.split("\\?",0)[1];
             String queryParameterName = queryParameter.split("=")[0];
             String queryParameterValue = queryParameter.split("=")[1].split("HTTP")[0];
 
