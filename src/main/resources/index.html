@@ -5,124 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Kristiania Questionnaire</title>
-
-
-    <style>
-
-
-        /* Styling the Body element i.e. Color,
-        Font, Alignment */
-        body {
-            background-color: cornflowerblue;
-            font-family: Verdana, serif;
-            text-align: center;
-        }
-
-
-        /* Styling the Form (Color, Padding, Shadow) */
-        form {
-            background-color: ghostwhite;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 30px 20px;
-            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Styling form-control Class */
-        .form-control {
-            text-align: left;
-            margin-bottom: 25px;
-        }
-
-        /* Styling form-control Label */
-        .form-control label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* Styling form-control input,
-        select, textarea */
-        .form-control input,
-        .form-control select,
-        .form-control textarea {
-            border: 1px solid #777;
-            border-radius: 2px;
-            font-family: inherit;
-            padding: 10px;
-            display: block;
-            width: 95%;
-        }
-
-        /* Styling form-control Radio
-        button and Checkbox */
-        .form-control input[type="radio"],
-        .form-control input[type="checkbox"] {
-            display: inline-block;
-            width: auto;
-        }
-
-        /* Styling Button */
-        button {
-            background-color: #05c46b;
-            border: 1px solid #777;
-            border-radius: 2px;
-            font-family: inherit;
-            font-size: 21px;
-            display: block;
-            width: 100%;
-            margin-top: 50px;
-            margin-bottom: 20px;
-        }
-
-        #btn {
-            background-color: rgb(19, 47, 138);
-            text-decoration: none;
-            max-width: 750px;
-            margin: 50px auto;
-            padding: 30px 20px;
-            box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        a:link {
-            color: rgb(255, 255, 255);
-            background-color: transparent;
-            text-decoration: none;
-        }
-
-        a:visited {
-            color: pink;
-            background-color: transparent;
-            text-decoration: none;
-        }
-
-        h2 {
-            text-align: center;
-            color: blueviolet;
-        }
-
-        h4 {
-            text-align: center;
-            color: darkslateblue;
-        }
-
-        label {
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
 <h1>Questionnaire</h1>
 
-<!-- Create Form -->
 <form id="form" action="/api/user" method="POST"> <!-- Details -->
     <div class="form-control">
         <label for="first-name">
             First name
         </label>
 
-        <!-- Input Type Text -->
         <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required/>
     </div>
 
@@ -131,7 +26,6 @@
             Last name
         </label>
 
-        <!-- Input Type Text -->
         <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required/>
     </div>
 
@@ -140,46 +34,34 @@
             Email
         </label>
 
-        <!-- Input Type Email-->
         <input type="email" id="email" name="email" placeholder="Enter your email" required/>
     </div>
 
-
-    <!-- Multi-line Text Input Control -->
     <button type="submit" value="submit">
         Create user
     </button>
 </form>
 
+<div id="question" class="form-control"></div>
+<div style="text-align: center" id="answers" class="form-control"></div>
 
-    <div id="question" class="form-control"></div>
-
-<div id="answers" class="form-control"></div>
-
-
-
-
-<button id="btn">
-    <a href="/newQuestion.html">Add new now</a>
-</button>
-
+<button id="btn"><a href="/newQuestion.html">Add new now</a></button>
 <script>
 
 
-        fetch("/api/surveys")
-            .then(function (response) {
-                return response.text();
-            }).then(function (text) {
-            document.getElementById("question").innerHTML = text;
-        })
+    fetch("/api/surveys")
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+        document.getElementById("question").innerHTML = text;
+    })
 
-        fetch("/api/answers")
-            .then(function (response) {
-                return response.text();
-            }).then(function (text) {
-            document.getElementById("answers").innerHTML = text;
-        })
-
+    fetch("/api/answers")
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+        document.getElementById("answers").innerHTML = text;
+    })
 
 
 </script>
