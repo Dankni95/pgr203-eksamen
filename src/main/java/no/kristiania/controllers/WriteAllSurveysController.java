@@ -7,10 +7,10 @@ import no.kristiania.http.HttpMessage;
 
 import java.sql.SQLException;
 
-public class writeAllSurveysController implements HttpController {
+public class WriteAllSurveysController implements HttpController {
     private final SurveyDao surveyDao;
 
-    public writeAllSurveysController(SurveyDao surveyDao) {
+    public WriteAllSurveysController(SurveyDao surveyDao) {
         this.surveyDao = surveyDao;
     }
 
