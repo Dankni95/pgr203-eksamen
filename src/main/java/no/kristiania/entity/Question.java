@@ -31,7 +31,7 @@ public class Question {
         this.id = id;
     }
 
-    public String getTitle() {
+    public String getTitle(String title) {
         return title;
     }
 

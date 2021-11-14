@@ -1,19 +1,12 @@
 package no.kristiania.controllers;
 
 import no.kristiania.dao.*;
-import no.kristiania.entity.Option;
-import no.kristiania.entity.Question;
-import no.kristiania.entity.Survey;
-import no.kristiania.entity.User;
-import no.kristiania.http.HttpController;
-import no.kristiania.http.HttpMessage;
 import no.kristiania.http.HttpPostClient;
 import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,7 +37,7 @@ public class CreateSurveyControllerTest {
 
         assertThat(questionDao.listAll())
                 .anySatisfy(p -> {
-                    assertThat(p.getTitle()).isEqualTo("Question title");
+                    assertThat(p.getTitle("question title")).isEqualTo("Question title");
                     assertThat(p.getText()).isEqualTo("Question subtitle");
                 });
 

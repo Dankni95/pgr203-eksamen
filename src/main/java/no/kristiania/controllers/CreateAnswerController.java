@@ -33,8 +33,12 @@ public class CreateAnswerController implements HttpController {
         Answer answer = new Answer();
 
         User user;
-        if ((user = Cookie.getUser(request.headerFields.get("Cookie").split("=")[1].split(";")[0])) != null) {
-            answer.setUserId(user.getId());
+        if (request.headerFields.get("Cookie") != null) {
+            if ((user = Cookie.getUser(request.headerFields.get("Cookie").split("=")[1].split(";")[0])) != null) {
+                answer.setUserId(user.getId());
+            }else {
+                answer.setUserId(1);
+            }
         } else {
             answer.setUserId(1);
         }
@@ -43,7 +47,7 @@ public class CreateAnswerController implements HttpController {
         List<Question> question = questionDao.listAll();
         for (Question q : question) {
             String parameter;
-            if ((parameter = parameters.get(q.getTitle())) != null) {
+            if ((parameter = parameters.get(q.getTitle("question title"))) != null) {
                 List<Option> options;
                 if ((options = optionDao.listOptionsByQuestionId(q.getId())) != null) {
                     for (Option op : options) {

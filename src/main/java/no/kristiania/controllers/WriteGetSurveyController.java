@@ -6,11 +6,8 @@ import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpMessage;
 import no.kristiania.entity.Option;
 import no.kristiania.entity.Question;
-import no.kristiania.utils.Cookie;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WriteGetSurveyController implements HttpController {
@@ -18,27 +15,31 @@ public class WriteGetSurveyController implements HttpController {
     private final QuestionDao questionDao;
     private final UserDao userDao;
     private final SurveyDao surveyDao;
-    private final AnswerDao answerDao;
 
-    public WriteGetSurveyController(OptionDao optionDao, QuestionDao questionDao, UserDao userDao, SurveyDao surveyDao, AnswerDao answerDao) {
+
+    public WriteGetSurveyController(OptionDao optionDao, QuestionDao questionDao, UserDao userDao, SurveyDao surveyDao,AnswerDao answerDao) {
         this.optionDao = optionDao;
         this.questionDao = questionDao;
         this.userDao = userDao;
         this.surveyDao = surveyDao;
-        this.answerDao = answerDao;
     }
 
     @Override
     public HttpMessage handle(HttpMessage request) throws SQLException {
-
-        Map<String, String> parameters = HttpMessage.parseRequestParameters(request.getHeader("Referer"));
-        Map<String, String> cookie = HttpMessage.parseRequestParameters(request.getHeader("Cookie"));
         String responseText = "";
 
-        User user = Cookie.getUser(cookie.get("user").split(";")[0]);
+        Map<String, String> parameters = HttpMessage.parseRequestParameters(request.getHeader("Referer"));
+
+        User surveyCreator;
+        if ((surveyCreator = userDao.retrieve(surveyDao.retrieve(Integer.parseInt(parameters.get("id"))).getUserId())) != null){
+
+        }else {
+            surveyCreator = new User();
+            surveyCreator.setFirstName("Annon");
+        }
 
         responseText += "<h2>" + parameters.get("title") + "</h2>"
-                + "<p style=\"text-align: center;\">" + "Survey created by " + userDao.retrieve(surveyDao.retrieve(Integer.parseInt(parameters.get("id"))).getUserId()).getFirstName() + "</p>"
+                + "<p style=\"text-align: center;\">" + "Survey created by " + surveyCreator.getFirstName() + "</p>"
                 + "<form action=\"/api/questions\" method=\"POST\">";
 
         for (int i = 1; i <= questionDao.listAll().size(); i++) {
@@ -46,10 +47,10 @@ public class WriteGetSurveyController implements HttpController {
 
             if (question.getSurveyId() == Integer.parseInt(parameters.get("id").trim())) {
 
-                responseText += "<div class='form-control' for=" + "'" + question.getTitle() + "'"
+                responseText += "<div class='form-control' for=" + "'" + question.getTitle("question title") + "'"
                         + "<p style>" + "Question created by " + userDao.retrieve(question.getUserId()).getFirstName() + "</p>"
                         + "<h2>"
-                        + question.getTitle()
+                        + question.getTitle("question title")
                         + "</h2>"
                         + "<h4>"
                         + question.getText()
@@ -58,27 +59,17 @@ public class WriteGetSurveyController implements HttpController {
 
                 for (Option op : optionDao.listOptionsByQuestionId(i)) {
 
-                    responseText += "<div for='" + question.getTitle() + "' id='" + question.getTitle() + "'" + ">" +
+                    responseText += "<div for='" + question.getTitle("question title") + "' id='" + question.getTitle("question title") + "'" + ">" +
 
-                            "<label for=\"" + question.getTitle() + "\">"
-                            + "<input type=\"radio\" name=\"" + question.getTitle() + "\""
-                            + " value=\"" + op.getTitle() + "=" + question.getTitle() + "\">"
+                            "<label for=\"" + question.getTitle("question title") + "\">"
+                            + "<input type=\"radio\" name=\"" + question.getTitle("question title") + "\""
+                            + " value=\"" + op.getTitle() + "=" + question.getTitle("question title") + "\">"
                             + op.getTitle() + "</input>"
 
 
                             + "<input type=\"hidden\" name=\"" + "survey" + "\""
                             + " value=\"" + parameters.get("title") + "=" + parameters.get("id") + "\">"
                             + "</input>";
-
-                    if (user != null) {
-                        responseText += "<label for=\"" + "userId" + "\">"
-                                + "<input type=\"hidden\" name=\"" + "UserId" + "\""
-                                + " value=\"" + user.getId() + "\">";
-                    } else {
-                        responseText += "<label for=\"" + "userId" + "\">"
-                                + "<input type=\"hidden\" name=\"" + "UserId" + "\""
-                                + " value=\"" + "1" + "\">";
-                    }
 
 
                     responseText += "</div>";

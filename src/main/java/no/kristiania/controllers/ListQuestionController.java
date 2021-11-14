@@ -21,7 +21,7 @@ public class ListQuestionController implements HttpController {
         String messageBody = "";
 
         for (Question question : questionDao.listAll()) {
-            messageBody += "<h1>" + question.getText() + ", " + question.getTitle() + "</h1>";
+            messageBody += "<h1>" + question.getText() + ", " + question.getTitle("question title") + "</h1>";
         }
 
 
