@@ -31,7 +31,6 @@ public class CreateSurveyController implements HttpController {
     public HttpMessage handle(HttpMessage request) throws SQLException {
         Map<String, String> parameters = HttpMessage.parseRequestParameters(request.messageBody);
 
-
         String surveyTitle;
         if (parameters.get("surveys").equals("previous")) {
 
@@ -44,14 +43,12 @@ public class CreateSurveyController implements HttpController {
         }
 
         return new HttpMessage("HTTP/1.1 303 See Other", "Location", "/");
-
     }
 
     private void createQuestionsAndOptions(Map<String, String> parameters, String surveyTitle) throws SQLException {
         Question question = new Question();
         question.setTitle(parameters.get("title"));
         question.setText(parameters.get("text"));
-
 
         for (User user : userDao.listAll()) {
             String name = user.getFirstName() + " " + user.getLastName();
@@ -62,7 +59,6 @@ public class CreateSurveyController implements HttpController {
 
         question.setSurveyId(surveyDao.retrieveSurveyIdbyTitle(surveyTitle));
         questionDao.save(question);
-
 
         Option option = new Option();
         option.setTitle(parameters.get("option_1"));

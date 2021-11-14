@@ -1,8 +1,6 @@
 package no.kristiania.controllers;
 
 import no.kristiania.dao.*;
-import no.kristiania.entity.Option;
-import no.kristiania.entity.Question;
 import no.kristiania.entity.Survey;
 import no.kristiania.entity.User;
 import no.kristiania.http.HttpGetClient;
@@ -20,7 +18,6 @@ public class WriteAllSurveysControllerTest {
     public WriteAllSurveysControllerTest() throws IOException {
     }
 
-
     @Test
     void ShouldWriteAllSurveys() throws SQLException, IOException {
         SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
@@ -31,7 +28,6 @@ public class WriteAllSurveysControllerTest {
         annon.setLastName("Annon");
         annon.setEmail("Annon@annon.no");
         userDao.save(annon);
-
 
         Survey survey = new Survey();
         survey.setUserId(1); // Annon
@@ -47,8 +43,6 @@ public class WriteAllSurveysControllerTest {
         thirdSurvey.setUserId(1); // Annon
         thirdSurvey.setTitle("Third test survey name");
         surveyDao.save(thirdSurvey);
-;
-
 
         server.addController("GET /api/surveys", new WriteAllSurveysController(surveyDao));
 
@@ -64,5 +58,4 @@ public class WriteAllSurveysControllerTest {
 
         surveyDao.deleteAll();
     }
-
 }

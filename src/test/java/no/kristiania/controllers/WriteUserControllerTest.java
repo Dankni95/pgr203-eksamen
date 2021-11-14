@@ -1,7 +1,6 @@
 package no.kristiania.controllers;
 
 import no.kristiania.dao.*;
-import no.kristiania.entity.Survey;
 import no.kristiania.entity.User;
 import no.kristiania.http.*;
 import no.kristiania.utils.Cookie;
@@ -19,7 +18,6 @@ public class WriteUserControllerTest {
     public WriteUserControllerTest() throws IOException {
     }
 
-
     @Test
     void shouldHandleHttpMessage() throws SQLException, IOException {
 
@@ -32,9 +30,7 @@ public class WriteUserControllerTest {
 
         Cookie.setCookie(user);
 
-
         server.addController("POST /api/user", new CreateUserController(userDao));
-
 
         HttpPostClient postClient = new HttpPostClient(
                 "localhost",
@@ -52,7 +48,6 @@ public class WriteUserControllerTest {
                     assertThat(p.getEmail()).isEqualTo("kari@live.no");
                 });
 
-
         server.addController("GET /api/user", new WriteUserController());
 
         HttpGetClient httpGetClient = new HttpGetClient(
@@ -63,9 +58,7 @@ public class WriteUserControllerTest {
         );
 
         assertEquals(200, httpGetClient.getStatusCode());
-
         assertEquals(httpGetClient.getMessageBody().split(" ")[0], user.getFirstName());
         assertEquals(httpGetClient.getMessageBody().split(" ")[1], user.getLastName());
-
     }
 }

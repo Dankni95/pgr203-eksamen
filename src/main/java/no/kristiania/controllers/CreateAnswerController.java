@@ -43,7 +43,6 @@ public class CreateAnswerController implements HttpController {
             answer.setUserId(1);
         }
 
-
         List<Question> question = questionDao.listAll();
         for (Question q : question) {
             String parameter;
@@ -61,8 +60,6 @@ public class CreateAnswerController implements HttpController {
             }
         }
 
-
         return new HttpMessage("HTTP/1.1 303 See Other", "Location", "/survey.html?" + parameters.get("survey"));
-
     }
 }

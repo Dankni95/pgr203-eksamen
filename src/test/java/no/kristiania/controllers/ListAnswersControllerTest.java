@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,9 +26,7 @@ public class ListAnswersControllerTest {
         AnswerDao answerDao = new AnswerDao(TestData.testDataSource());
         SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
 
-
         server.addController("POST /api/answers", new ListAnswersByQuestionController(questionDao, userDao, optionDao, answerDao));
-
 
         HttpPostClient postClient = new HttpPostClient(
                 "localhost",

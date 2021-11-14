@@ -11,7 +11,6 @@ public class SurveyDao extends AbstractDao<Survey> {
         super(dataSource);
     }
 
-
     @Override
     protected Survey readFromResultSet(ResultSet rs) throws SQLException {
         Survey survey = new Survey();

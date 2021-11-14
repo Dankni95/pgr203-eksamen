@@ -16,7 +16,6 @@ public class WriteGetSurveyController implements HttpController {
     private final UserDao userDao;
     private final SurveyDao surveyDao;
 
-
     public WriteGetSurveyController(OptionDao optionDao, QuestionDao questionDao, UserDao userDao, SurveyDao surveyDao, AnswerDao answerDao) {
         this.optionDao = optionDao;
         this.questionDao = questionDao;
@@ -56,9 +55,7 @@ public class WriteGetSurveyController implements HttpController {
                         + question.getText()
                         + "</h4>";
 
-
                 for (Option op : optionDao.listOptionsByQuestionId(i)) {
-
                     responseText += "<div for='" + question.getTitle() + "' id='" + question.getTitle() + "'" + ">" +
 
                             "<label for=\"" + question.getTitle() + "\">"
@@ -71,7 +68,6 @@ public class WriteGetSurveyController implements HttpController {
                             + " value=\"" + parameters.get("title") + "=" + parameters.get("id") + "\">"
                             + "</input>";
 
-
                     responseText += "</div>";
                 }
                 responseText += "<br><hr>" + "</div>";
@@ -81,6 +77,5 @@ public class WriteGetSurveyController implements HttpController {
                 + "<button type=\"submit\" value=\"Submit\">\n" + "Submit" + "</button>" + "</form>";
 
         return new HttpMessage("HTTP/1.1 200 OK", responseText);
-
     }
 }

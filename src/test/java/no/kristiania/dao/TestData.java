@@ -1,10 +1,8 @@
 package no.kristiania.dao;
 
-import no.kristiania.entity.User;
 import org.flywaydb.core.Flyway;
 import org.h2.jdbcx.JdbcDataSource;
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.Random;
 
 public class TestData {
@@ -18,8 +16,6 @@ public class TestData {
                 load().migrate();
         return dataSource;
     }
-
-
 
     private static final Random random = new Random();
 

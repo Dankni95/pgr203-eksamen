@@ -11,8 +11,6 @@ public class SurveyDaoTest {
     private final SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
     private static Survey survey;
 
-
-
     public static Survey exampleSurvey() throws SQLException {
 
         survey = new Survey();

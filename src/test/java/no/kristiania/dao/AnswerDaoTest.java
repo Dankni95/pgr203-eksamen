@@ -40,7 +40,6 @@ class AnswerDaoTest {
 
         optionDao.save(option);
 
-
         Answer answer = new Answer();
         answer.setUserId(survey.getUserId()); //Annon
         answer.setQuestionId(question.getId());
@@ -79,6 +78,4 @@ class AnswerDaoTest {
 
         assertNull(answerDao.retrieve(answer.getId()));
     }
-
-
 }

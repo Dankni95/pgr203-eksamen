@@ -15,7 +15,6 @@ public class QuestionDao extends AbstractDao<Question> {
         super(dataSource);
     }
 
-
     @Override
     protected Question readFromResultSet(ResultSet rs) throws SQLException {
         Question question = new Question();
@@ -79,5 +78,4 @@ public class QuestionDao extends AbstractDao<Question> {
     public Question retrieve(long id) throws SQLException {
         return super.retrieve("SELECT * FROM question WHERE id =  ?", id);
     }
-
 }

@@ -1,11 +1,8 @@
 package no.kristiania.controllers;
 
 import no.kristiania.dao.*;
-import no.kristiania.entity.Question;
 import no.kristiania.entity.Survey;
-import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpGetClient;
-import no.kristiania.http.HttpMessage;
 import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +16,6 @@ public class WriteQuestionsForAnswerControllerTest {
 
     public WriteQuestionsForAnswerControllerTest() throws IOException {
     }
-
 
     @Test
     void shouldHandleHttpMessage() throws SQLException, IOException {

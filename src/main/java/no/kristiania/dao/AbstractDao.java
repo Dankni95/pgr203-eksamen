@@ -27,13 +27,11 @@ public abstract class AbstractDao<T> {
         }
     }
 
-
     protected abstract T readFromResultSet(ResultSet rs) throws SQLException;
 
     public abstract List<T> listAll() throws SQLException;
 
     public abstract void deleteAll() throws SQLException;
-
 
     protected List<T> listAll(String sql) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
@@ -56,5 +54,4 @@ public abstract class AbstractDao<T> {
             }
         }
     }
-
 }

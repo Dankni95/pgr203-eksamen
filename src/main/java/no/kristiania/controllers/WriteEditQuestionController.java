@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class WriteEditQuestionController implements HttpController {
-
     private final QuestionDao questionDao;
     Map<String, String> parameters;
 
@@ -20,14 +19,11 @@ public class WriteEditQuestionController implements HttpController {
 
     @Override
     public HttpMessage handle(HttpMessage request) throws SQLException {
-
-
         parameters = HttpMessage.parseRequestParameters(request.getHeader("Referer"));
         StringBuilder responseText = new StringBuilder();
 
         writeEditHeader(responseText);
         writeEditQuestions(responseText);
-
 
         return new HttpMessage("HTTP/1.1 200 OK", responseText.toString());
 
@@ -39,8 +35,6 @@ public class WriteEditQuestionController implements HttpController {
                 .append("<form action=\"/api/edit\" method=\"POST\">")
                 .append("<label value=\"").append("select").append("\">").append("Choose question to edit").append("</label>")
                 .append("<select name=").append("\"questionId").append("\"").append(">");
-
-
     }
 
     private void writeEditQuestions(StringBuilder responseText) throws SQLException {
@@ -51,7 +45,6 @@ public class WriteEditQuestionController implements HttpController {
                 responseText
                         .append("<option").append(" value=").append("\"").append(q.getId()).append("\"").append(">").append(q.getTitle())
                         .append("</option>");
-
             }
 
         }
@@ -69,7 +62,6 @@ public class WriteEditQuestionController implements HttpController {
                 .append(" value=\"").append("\">")
                 .append("</input>")
                 .append("<button type=\"submit\" value=\"Submit\">\n").append("Go to selected question").append("</button>").append("</form>");
-
     }
 }
 

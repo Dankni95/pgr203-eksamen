@@ -4,15 +4,12 @@ import no.kristiania.dao.*;
 import no.kristiania.entity.Option;
 import no.kristiania.entity.Question;
 import no.kristiania.entity.Survey;
-import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpGetClient;
-import no.kristiania.http.HttpMessage;
 import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,15 +19,11 @@ public class WriteEditQuestionControllerTest {
     public WriteEditQuestionControllerTest() throws IOException {
     }
 
-
     @Test
     void ShouldListAllQuestions() throws SQLException, IOException {
         QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
         OptionDao optionDao = new OptionDao(TestData.testDataSource());
         SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
-
-
-
 
         Survey survey = new Survey();
         survey.setUserId(1); // Annon
@@ -57,14 +50,11 @@ public class WriteEditQuestionControllerTest {
         option.setQuestionId(question.getId());
         optionDao.save(option);
 
-
         Option secondOption = new Option();
         secondOption.setTitle("Option 1");
         secondOption.setQuestionId(secondQuestion.getId());
 
-
         optionDao.save(secondOption);
-
 
         server.addController("GET /api/answers", new WriteQuestionsForAnswerController(questionDao));
 
@@ -81,7 +71,6 @@ public class WriteEditQuestionControllerTest {
         questionDao.deleteAll();
         optionDao.deleteAll();
     }
-
 }
 
 

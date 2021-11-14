@@ -11,15 +11,11 @@ public class WriteUserController implements HttpController {
 
     @Override
     public HttpMessage handle(HttpMessage request) throws SQLException, IOException {
-
         String messageBody;
         String firstName;
         String lastName;
 
-
         if (Cookie.getUser(request.headerFields.get("Cookie").split("=")[1].split(";")[0]) != null) {
-
-            // Intellij keeps adding default cookie?
 
             firstName = Cookie.getUser(request.headerFields.get("Cookie").split("=")[1].split(";")[0]).getFirstName();
             lastName = Cookie.getUser(request.headerFields.get("Cookie").split("=")[1].split(";")[0]).getLastName();

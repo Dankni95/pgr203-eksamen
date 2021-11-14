@@ -5,7 +5,6 @@ import no.kristiania.dao.UserDao;
 import no.kristiania.entity.Survey;
 import no.kristiania.entity.User;
 
-
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -20,7 +19,6 @@ public class CreateNewSurvey {
         this.userDao = userDao;
     }
 
-
     public Survey create(Map<String, String> parameters) throws SQLException {
 
         Survey survey = new Survey();
@@ -34,7 +32,6 @@ public class CreateNewSurvey {
 
         survey.setTitle(parameters.get("new-survey"));
         surveyDao.save(survey);
-
 
         return survey;
     }

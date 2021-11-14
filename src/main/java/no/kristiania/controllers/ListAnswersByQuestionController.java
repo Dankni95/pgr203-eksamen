@@ -1,6 +1,5 @@
 package no.kristiania.controllers;
 
-
 import no.kristiania.dao.AnswerDao;
 import no.kristiania.dao.OptionDao;
 import no.kristiania.dao.QuestionDao;
@@ -11,7 +10,6 @@ import no.kristiania.entity.Question;
 import no.kristiania.entity.User;
 import no.kristiania.http.HttpController;
 import no.kristiania.http.HttpMessage;
-
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -1,14 +1,11 @@
 package no.kristiania.controllers;
 
 import no.kristiania.dao.*;
-import no.kristiania.entity.User;
 import no.kristiania.http.*;
-import no.kristiania.utils.Cookie;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,7 +22,6 @@ public class CreateUserControllerTest {
 
         server.addController("POST /api/user", new CreateUserController(userDao));
 
-
         HttpPostClient postClient = new HttpPostClient(
                 "localhost",
                 server.getPort(),
@@ -41,6 +37,5 @@ public class CreateUserControllerTest {
                     assertThat(p.getLastName()).isEqualTo("Normann");
                     assertThat(p.getEmail()).isEqualTo("kari@live.no");
                 });
-
     }
 }

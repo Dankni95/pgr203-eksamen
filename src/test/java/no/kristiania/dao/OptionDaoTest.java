@@ -18,8 +18,6 @@ public class OptionDaoTest {
     private static Survey survey;
     private static Question question;
 
-
-
     public static Option exampleQuestion() throws SQLException {
         QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
         OptionDao optionDao = new OptionDao(TestData.testDataSource());
@@ -58,7 +56,6 @@ public class OptionDaoTest {
         option5.setTitle("Option 5");
         option5.setQuestionId(question.getId());
 
-
         optionDao.save(option);
         optionDao.save(option2);
         optionDao.save(option3);
@@ -71,7 +68,6 @@ public class OptionDaoTest {
     @Test
     void shouldRetrieveSavedOption() throws SQLException {
         Option option = exampleQuestion();
-        optionDao.save(option);
         assertThat(optionDao.retrieve(option.getId()))
                 .hasNoNullFieldsOrProperties()
                 .usingRecursiveComparison()
@@ -81,9 +77,7 @@ public class OptionDaoTest {
     @Test
     void shouldListAllOptions() throws SQLException {
         Option option = exampleQuestion();
-        optionDao.save(option);
         Option anotherOption = exampleQuestion();
-        optionDao.save(anotherOption);
 
         assertThat(optionDao.listAll())
                 .extracting(Option::getId)
@@ -93,7 +87,6 @@ public class OptionDaoTest {
     @Test
     void shouldDeleteOptions() throws SQLException {
         Option option = exampleQuestion();
-        optionDao.save(option);
         optionDao.deleteAll();
 
         assertNull(optionDao.retrieve(option.getId()));
@@ -113,7 +106,6 @@ public class OptionDaoTest {
         question.setText("Test subtitle name");
         question.setUserId(1);
         question.setSurveyId(survey.getId());
-
         questionDao.save(question);
 
         option = new Option();

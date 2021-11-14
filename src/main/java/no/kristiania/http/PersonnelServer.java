@@ -26,9 +26,7 @@ public class PersonnelServer {
         UserDao userDao = new UserDao(dataSource);
         AnswerDao answerDao = new AnswerDao(dataSource);
 
-
         httpServer.addController("/error", new ErrorController());
-
 
         httpServer.addController("POST /api/new-survey", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
         httpServer.addController("POST /api/questions", new CreateAnswerController(questionDao, answerDao, optionDao));
@@ -36,14 +34,12 @@ public class PersonnelServer {
         httpServer.addController("POST /api/answers", new ListAnswersByQuestionController(questionDao, userDao, optionDao, answerDao));
         httpServer.addController("POST /api/user", new CreateUserController(userDao));
 
-
         httpServer.addController("GET /api/questions", new WriteGetSurveyController(optionDao, questionDao, userDao, surveyDao, answerDao));
         httpServer.addController("GET /api/edit", new WriteEditQuestionController(questionDao));
         httpServer.addController("GET /api/surveys", new WriteAllSurveysController(surveyDao));
         httpServer.addController("GET /api/all-surveys", new WriteAllSurveysAsOptionsController(surveyDao));
         httpServer.addController("GET /api/answers", new WriteQuestionsForAnswerController(questionDao));
         httpServer.addController("GET /api/user", new WriteUserController());
-
 
         logger.info("Started http://localhost:{}/", httpServer.getPort());
     }

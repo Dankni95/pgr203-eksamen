@@ -56,7 +56,6 @@ public class HttpMessage {
 
             queryMap.put("title", queryParameterName);
             queryMap.put("id", queryParameterValue);
-
         }
         return queryMap;
     }
@@ -130,5 +129,4 @@ public class HttpMessage {
 
         clientSocket.getOutputStream().write(response.getBytes());
     }
-
 }

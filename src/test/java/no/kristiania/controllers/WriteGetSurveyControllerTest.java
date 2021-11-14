@@ -52,8 +52,6 @@ public class WriteGetSurveyControllerTest {
 
         questionDao.save(question);
 
-        System.out.println(question.getId());
-
         Option option = new Option();
         option.setTitle("Option 1");
         option.setQuestionId(question.getId());

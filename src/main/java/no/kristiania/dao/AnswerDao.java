@@ -19,7 +19,6 @@ public class AnswerDao extends AbstractDao<Answer> {
         answer.setQuestionId(rs.getLong("question_id"));
         answer.setOptionId(rs.getLong("option_id"));
         return answer;
-
     }
 
     public void save(Answer answer) throws SQLException {

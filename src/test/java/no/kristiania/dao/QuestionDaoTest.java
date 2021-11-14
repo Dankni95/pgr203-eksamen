@@ -3,7 +3,6 @@ package no.kristiania.dao;
 import no.kristiania.entity.Option;
 import no.kristiania.entity.Question;
 import no.kristiania.entity.Survey;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -19,7 +18,6 @@ public class QuestionDaoTest {
     private static Option option3;
     private static Option option4;
     private static Option option5;
-
 
     public static Question exampleQuestion() throws SQLException {
         QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
@@ -58,7 +56,6 @@ public class QuestionDaoTest {
         option5 = new Option();
         option5.setTitle("Option 5");
         option5.setQuestionId(question.getId());
-
 
         optionDao.save(option);
         optionDao.save(option2);

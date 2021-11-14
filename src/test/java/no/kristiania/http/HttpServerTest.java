@@ -1,6 +1,5 @@
 package no.kristiania.http;
 
-
 import no.kristiania.controllers.OptionsController;
 import no.kristiania.entity.Option;
 import no.kristiania.entity.Question;
@@ -102,17 +101,11 @@ class HttpServerTest {
         option5.setTitle("Option 5");
         option5.setQuestionId(question.getId());
 
-
-
-
-
         optionDao.save(option);
         optionDao.save(option2);
         optionDao.save(option3);
         optionDao.save(option4);
         optionDao.save(option5);
-
-
 
         server.addController("/api/option", new OptionsController(optionDao));
 

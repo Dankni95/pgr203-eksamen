@@ -5,7 +5,6 @@ public class Survey {
     private long userId;
     private long id;
 
-
     public long getUserId() {
         return userId;
     }

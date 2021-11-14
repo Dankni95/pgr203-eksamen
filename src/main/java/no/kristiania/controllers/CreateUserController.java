@@ -14,13 +14,11 @@ public class CreateUserController implements HttpController {
 
     public CreateUserController(UserDao userDao) {
         this.userDao = userDao;
-
     }
 
     @Override
     public HttpMessage handle(HttpMessage request) throws SQLException {
         Map<String, String> parameters = HttpMessage.parseRequestParameters(request.messageBody);
-
 
         User user = new User();
         user.setFirstName(parameters.get("first-name"));
@@ -31,6 +29,5 @@ public class CreateUserController implements HttpController {
         Cookie.setCookie(user);
 
         return new HttpMessage("HTTP/1.1 303 See Other", "Location", "/", "Set-cookie", "user=" + user.getCookie());
-
     }
 }

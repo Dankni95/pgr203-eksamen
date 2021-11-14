@@ -7,12 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class OptionDao extends AbstractDao<Option> {
     public OptionDao(DataSource dataSource) {
         super(dataSource);
     }
-
 
     @Override
     protected Option readFromResultSet(ResultSet rs) throws SQLException {
@@ -22,7 +20,6 @@ public class OptionDao extends AbstractDao<Option> {
         option.setId(rs.getLong("id"));
         return option;
     }
-
 
     public void save(Option option) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
@@ -40,7 +37,6 @@ public class OptionDao extends AbstractDao<Option> {
             }
         }
     }
-
 
     @Override
     public List<Option> listAll() throws SQLException {

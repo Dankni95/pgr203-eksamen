@@ -1,12 +1,9 @@
 package no.kristiania.http;
 
-import no.kristiania.utils.Cookie;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +16,6 @@ public class HttpServer {
 
     public HttpServer(int serverPort) throws IOException {
         serverSocket = new ServerSocket(serverPort);
-
-
         new Thread(this::handleClients).start();
     }
 
@@ -53,7 +48,6 @@ public class HttpServer {
         String[] requestLine = httpMessage.startLine.split(" ");
         String requestTarget = requestLine[1];
 
-
         int questionPos = requestTarget.indexOf('?');
         String fileTarget;
         String query = null;
@@ -78,18 +72,15 @@ public class HttpServer {
             }
         }
 
-
         if (controllers.containsKey(fileTarget)) {
             HttpMessage response = controllers.get(fileTarget).handle(httpMessage);
             response.write(clientSocket);
             return;
         }
 
-
         if (fileTarget.equals("/")) fileTarget = "/index.html";
 
         InputStream fileResource = getClass().getResourceAsStream(fileTarget);
-
 
         if (fileResource != null) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -118,7 +109,6 @@ public class HttpServer {
     }
 
     private void writeOkResponse(Socket clientSocket, String responseText, String contentType) throws IOException {
-
         String response = "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + responseText.length() + "\r\n" +
                 "Content-Type: " + contentType + "\r\n" +

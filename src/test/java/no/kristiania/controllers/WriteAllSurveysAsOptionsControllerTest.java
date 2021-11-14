@@ -1,6 +1,5 @@
 package no.kristiania.controllers;
 
-
 import no.kristiania.dao.*;
 import no.kristiania.entity.Survey;
 import no.kristiania.http.HttpGetClient;
@@ -21,9 +20,6 @@ public class WriteAllSurveysAsOptionsControllerTest {
 
     @Test
     void shouldHandleHttpMessage() throws SQLException, IOException {
-        QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
-        OptionDao optionDao = new OptionDao(TestData.testDataSource());
-        UserDao userDao = new UserDao(TestData.testDataSource());
         SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
 
         Survey survey = new Survey();
@@ -32,7 +28,6 @@ public class WriteAllSurveysAsOptionsControllerTest {
         surveyDao.save(survey);
 
         server.addController("GET /api/all-surveys", new WriteAllSurveysAsOptionsController(surveyDao));
-
 
         HttpGetClient httpGetClient = new HttpGetClient(
                 "localhost",

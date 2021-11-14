@@ -26,7 +26,6 @@ public class CreateSurveyControllerTest {
 
         server.addController("POST /api/new-survey", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
 
-
         HttpPostClient postClient = new HttpPostClient(
                 "localhost",
                 server.getPort(),
@@ -46,8 +45,6 @@ public class CreateSurveyControllerTest {
                     assertThat(o.getTitle()).isEqualTo("Option 1");
                     assertThat(o.getQuestionId()).isEqualTo(1);
                 });
-
-
 
         userDao.deleteAll();
         surveyDao.deleteAll();
