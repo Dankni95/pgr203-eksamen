@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Kristiania | New question</title>
+</head>
+
+<body>
+<h1>Add new question</h1>
+
+<form id="form" action="/api/new-survey" method="POST">
+    <div class="form-control">
+
+        <label for="surveys">Create question in survey: </label>
+
+
+        <select name="surveys" id="surveys" onchange="removeDisabled()">
+            <option value="previous" onload="removeDisabled()">Select previous survey</option>
+        </select>
+        <br>
+        <label for="new-survey">
+            Or create new survey:
+        </label>
+
+        <input id="new-survey" name="new-survey" type="text" value="" placeholder="Enter new survey title"/>
+
+        <br>
+        <label for="user">
+            Enter existing users first name and last name
+        </label>
+        <h6>Ex: Kari Normann (if user is not found it will default to Anonymous)</h6>
+
+        <input id="user" name="user" type="text" value="" placeholder="Enter your first name and last name"/>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="form-control">
+        <label for="title">
+            Question title
+        </label>
+
+        <input id="title" name="title" type="text" value="" placeholder="Enter your question title" required/>
+    </div>
+
+    <div class="form-control">
+        <label for="text">
+            Question subtitle
+        </label>
+
+        <input id="text" name="text" type="text" value="" placeholder="Enter your question sub title" required/>
+    </div>
+
+
+    <div class="form-control">
+        <label for="option_1">
+            Option
+        </label>
+
+        <input id="option_1" name="option_1" type="text" value="" placeholder="Enter option for your question"
+               required/>
+        <br>
+    </div>
+    <button id="small-btn" style="background-color: blue;" type="button" onclick="addOption(this)">Add more options</button>
+
+    <button type="submit" value="submit">Submit</button>
+</form>
+
+<button id="btn"><a href="/">Go Home</a></button>
+
+<script>
+
+    fetch("/api/all-surveys")
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+        document.getElementById("surveys").innerHTML += text;
+    })
+
+    fetch("/api/user")
+        .then(function (response) {
+            return response.text();
+        }).then(function (text) {
+        if (text === "500 INTERNAL SERVER ERROR") {
+            document.getElementById("user").value = "Anonymous";
+        } else {
+            document.getElementById("user").value = text;
+        }
+    })
+
+
+    function removeDisabled() {
+        let newSurvey = document.getElementById("new-survey");
+        let survey = document.getElementById("surveys");
+        let user = document.getElementById("user")
+        let value = survey.options[survey.selectedIndex].value;
+
+        if (value === "previous") {
+            newSurvey.disabled = false;
+            user.disabled = false;
+            newSurvey.style.display = "block"
+            user.style.display = "block"
+            newSurvey.setAttribute("required", "true");
+        } else {
+            newSurvey.value = "";
+            newSurvey.disabled = true;
+            newSurvey.style.display = "none"
+            newSurvey.setAttribute("required", "false");
+        }
+    }
+
+
+    let count = 2;
+
+    function addOption(button) {
+        let optionDiv = document.getElementsByClassName("form-control")[3];
+        let form = document.getElementById("form")
+
+        if (form.length === 11) button.remove();
+
+        if (form.length <= 11) {
+
+            let br = document.createElement("BR");
+            optionDiv.insertAdjacentElement("beforeend", br)
+
+            let label = document.createElement("LABEL");
+            label.innerHTML = "Option";
+            label.htmlFor = `option_${count}`;
+            optionDiv.insertAdjacentElement("beforeend", label)
+
+            var y = document.createElement("INPUT");
+            y.setAttribute("placeholder", "Enter another option");
+            y.setAttribute("name", `option_${count}`);
+            y.setAttribute("id", `option_${count}`);
+            y.required = "true";
+            optionDiv.insertAdjacentElement("beforeend", y)
+            count++
+        }
+    }
+
+    window.onload = removeDisabled();
+</script>
+</body>
+
+</html>
