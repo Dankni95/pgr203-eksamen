@@ -1,6 +1,8 @@
 # PGR203 Avansert Java eksamen
 ![example workflow](https://github.com/Dankni95/pgr203-eksamen/actions/workflows/maven.yml/badge.svg)
 
+Link to repo: https://github.com/Dankni95/pgr203-eksamen.git
+
 ### Made by
 @Dankni95 (Daniel Lysak)
 
@@ -41,6 +43,14 @@ java -jar target/http-server-1.0-SNAPSHOT.jar
 - Håndtering av request target "/"
 - UML diagram som dokumenterer datamodell og/eller arkitektur (presentert i README.md)
 - Avansert datamodell (mer enn 3 tabeller)
+
+### Egenevaluering
+Vi opplever at vi har hatt ett godt samarbeid gjennom denne eksamen. Vi har arbeidet både fysisk og digitalt, hovedsakelig hvor den ene programmerer og den andre bistår.
+Det har vært krevende, men samtidig veldig lærerrikt. Vi mener vårt prosjekt viser stor grad av kompleksitet, med opptil flere databasetabeller, controllere, og utførelse av flere kriterier under "ekstraoppgaver".
+
+Vi opplever at prosjektet har økt vår forståelse av hvordan servere, klienter og databaser snakker sammen og interagerer med hverandre.
+
+Noe vi kunne gjort annerleded? Vi kunne hatt større fokus på testdrevet utvikling underveis i hele prosjektet, istedenfor i større bolker.
 
 ### Databasemodell
 ![Blank diagram](https://user-images.githubusercontent.com/69323014/141691837-01d1c163-3b2c-4851-8286-e73fb9986bfb.png)
@@ -99,5 +109,6 @@ java -jar target/http-server-1.0-SNAPSHOT.jar
 * [ ] Klarer dere å lage en Coverage-rapport med GitHub Actions med Coveralls? (Advarsel: Foreleser har nylig opplevd feil med Coveralls så det er ikke sikkert dere får det til å virke)
 * [ ] FARLIG: I løpet av kurset har HttpServer og tester fått funksjonalitet som ikke lenger er nødvendig. Klarer dere å fjerne alt som er overflødig nå uten å også fjerne kode som fortsatt har verdi? (Advarsel: Denne kan trekke ned dersom dere gjør det feil!)
 
-### Erfaringer fra arbeidet
+ 
+
 
