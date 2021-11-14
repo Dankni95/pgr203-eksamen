@@ -79,7 +79,7 @@ Noe vi kunne gjort annerleded? Vi kunne hatt større fokus på testdrevet utvikl
 * [x] `mvn package` bygger en executable jar-fil
 * [x] Koden inneholder et godt sett med tester
 * [x] `java -jar target/...jar` (etter `mvn package`) lar bruker legge til og liste ut data fra databasen via webgrensesnitt
-* [ ] Serveren leser HTML-filer fra JAR-filen slik at den ikke er avhengig av å kjøre i samme directory som kildekoden
+* [x] Serveren leser HTML-filer fra JAR-filen slik at den ikke er avhengig av å kjøre i samme directory som kildekoden
 * [x] Programmet leser `dataSource.url`, `dataSource.username` og `dataSource.password` fra `pgr203.properties` for å connecte til databasen
 * [x] Programmet bruker Flywaydb for å sette opp databaseskjema
 * [x] Server skriver nyttige loggmeldinger, inkludert informasjon om hvilken URL den kjører på ved oppstart
