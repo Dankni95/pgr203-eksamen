@@ -1,5 +1,5 @@
 # PGR203 Avansert Java eksamen
-![example workflow](https://github.com/kristiania-pgr203-2021/pgr203-eksamen/actions/workflows/maven.yml/badge.svg)
+![example workflow](https://github.com/Dankni95/pgr203-eksamen/actions/workflows/maven.yml/badge.svg)
 
 ### Made by
 @Dankni95 (Daniel Lysak)
