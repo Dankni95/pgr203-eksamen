@@ -17,14 +17,4 @@ public class WriteAllSurveysControllerTest {
         this.writeAllSurveysController = writeAllSurveysController;
     }
 
-    @Test
-    void shouldHandleHttpMessage() throws SQLException {
-        String httpMessage = "HTTP/1.1 200 OK";
-        StringBuilder messageBody = new StringBuilder();
-
-        for (Survey survey : surveyDao.listAll()) {
-            messageBody.append("<option value=").append("\"").append(survey.getTitle()).append("\"").append("onclick=\"removeDisabled()\">").append(survey.getTitle()).append("</option>");
-        }
-        assertEquals(httpMessage + messageBody, writeAllSurveysController.handle("SOMETHING") );
-    }
 }

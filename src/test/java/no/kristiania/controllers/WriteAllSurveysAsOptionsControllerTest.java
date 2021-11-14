@@ -1,38 +1,23 @@
 package no.kristiania.controllers;
 
 
-import no.kristiania.dao.SurveyDao;
+import no.kristiania.dao.*;
 import no.kristiania.entity.Question;
 import no.kristiania.entity.Survey;
+import no.kristiania.http.HttpGetClient;
+import no.kristiania.http.HttpPostClient;
+import no.kristiania.http.HttpServer;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WriteAllSurveysAsOptionsControllerTest {
-    private final SurveyDao surveyDao;
-    private final WriteAllSurveysAsOptionsController writeAllSurveysAsOptionsController;
+    private final HttpServer server = new HttpServer(0);
 
-    public WriteAllSurveysAsOptionsControllerTest(SurveyDao surveyDao, WriteAllSurveysAsOptionsController writeAllSurveysAsOptionsController) {
-        this.surveyDao = surveyDao;
-        this.writeAllSurveysAsOptionsController = writeAllSurveysAsOptionsController;
-    }
-
-    @Test
-    void shouldHandleHttpMessage() throws SQLException {
-        String httpMessage = "HTTP/1.1 200 OK";
-        StringBuilder messageBody = new StringBuilder();
-
-        for (Survey survey : surveyDao.listAll()) {
-            messageBody.append("<option value=")
-                    .append("\"")
-                    .append(survey.getTitle())
-                    .append("\"")
-                    .append("onclick=\"removeDisabled()\">")
-                    .append(survey.getTitle())
-                    .append("</option>");
-        }
-        assertEquals(httpMessage + messageBody, writeAllSurveysAsOptionsController.handle("SOMETHING"));
+    public WriteAllSurveysAsOptionsControllerTest() throws IOException {
     }
 }

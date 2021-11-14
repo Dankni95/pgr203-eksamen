@@ -18,14 +18,5 @@ public class ListQuestionControllerTest {
         this.listQuestionController = listQuestionController;
     }
 
-    @Test
-    void shouldHandleHttpMessage() throws SQLException {
-        String httpMessage = "HTTP/1.1 200 OK";
-        String messageBody = "";
 
-        for (Question question : questionDao.listAll()) {
-            messageBody += "<h1>" + question.getText() + ", " + question.getTitle() + "</h1>";
-        }
-        assertEquals(httpMessage + messageBody, listQuestionController.handle("SOMETHING"));
-    }
 }

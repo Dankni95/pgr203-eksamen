@@ -1,7 +1,6 @@
 package no.kristiania.http;
 
 
-import no.kristiania.controllers.CreateSurveyController;
 import no.kristiania.controllers.OptionsController;
 import no.kristiania.entity.Option;
 import no.kristiania.entity.Question;
@@ -15,7 +14,6 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalTime;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -123,40 +121,5 @@ class HttpServerTest {
                 "<option value=1>Option 1</option><option value=2>Option 2</option><option value=3>Option 3</option><option value=4>Option 4</option><option value=5>Option 5</option>",
                 client.getMessageBody()
         );
-    }
-
-
-    @Test
-    void shouldCreateNewQuestion() throws IOException, SQLException {
-        QuestionDao questionDao = new QuestionDao(TestData.testDataSource());
-        OptionDao optionDao = new OptionDao(TestData.testDataSource());
-        UserDao userDao = new UserDao(TestData.testDataSource());
-        SurveyDao surveyDao = new SurveyDao(TestData.testDataSource());
-
-        server.addController("POST /api/new-survey", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
-        
-        
-        HttpPostClient postClient = new HttpPostClient(
-                "localhost",
-                server.getPort(),
-                "/api/new-survey",
-                "surveys=previous&new-survey=New+survey&user=Anonymous+&title=Question+title&text=Question+subtitle&option_1=Option+1&option_2=Option+2&option_3=Option+3&option_4=Option+4&option_5=Option+5"
-        );
-        assertEquals(303, postClient.getStatusCode());
-        
-        assertThat(questionDao.listAll())
-                .anySatisfy(p -> {
-                    assertThat(p.getTitle()).isEqualTo("Question title");
-                    assertThat(p.getText()).isEqualTo("Question subtitle");
-                });
-
-        assertThat(optionDao.listAll())
-                .anySatisfy(o -> {
-                    assertThat(o.getTitle()).isEqualTo("Option 1");
-                    assertThat(o.getQuestionId()).isEqualTo(1);
-                });
-
-        optionDao.deleteAll();
-        questionDao.deleteAll();
     }
 }

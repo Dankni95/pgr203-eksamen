@@ -30,11 +30,11 @@ public class PersonnelServer {
         httpServer.addController("/error", new ErrorController());
 
 
-        httpServer.addController("POST /api/new-survey", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao));
+        httpServer.addController("POST /api/new-survey", new CreateSurveyController(questionDao, optionDao, userDao, surveyDao)); //done
         httpServer.addController("POST /api/questions", new CreateAnswerController(questionDao, answerDao, optionDao));
         httpServer.addController("POST /api/edit", new CreateEditQuestionController(questionDao));
         httpServer.addController("POST /api/answers", new ListAnswersByQuestionController(questionDao, userDao, optionDao, answerDao));
-        httpServer.addController("POST /api/user", new CreateUserController(userDao));
+        httpServer.addController("POST /api/user", new CreateUserController(userDao)); //done
 
 
         httpServer.addController("GET /api/questions", new WriteGetSurveyController(optionDao, questionDao, userDao, surveyDao, answerDao));
