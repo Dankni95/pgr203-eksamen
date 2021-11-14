@@ -1,5 +1,5 @@
 # PGR203 Avansert Java eksamen
-
+![example workflow](https://github.com/kristiania-pgr203-2021/pgr203-eksamen/actions/workflows/maven.yml/badge.svg)
 
 ## Beskriv hvordan programmet skal testes:
 
@@ -16,17 +16,17 @@
 
 ## Vedlegg: Sjekkliste for innlevering
 
-* [ ] Dere har lest eksamensteksten
-* [ ] Dere har lastet opp en ZIP-fil med navn basert på navnet på deres Github repository
-* [ ] Koden er sjekket inn på github.com/pgr203-2021-repository
+* [x] Dere har lest eksamensteksten
+* [x] Dere har lastet opp en ZIP-fil med navn basert på navnet på deres Github repository
+* [x] Koden er sjekket inn på github.com/pgr203-2021-repository
 * [ ] Dere har committed kode med begge prosjektdeltagernes GitHub konto (alternativt: README beskriver arbeidsform)
 
 ### README.md
 
-* [ ] `README.md` inneholder en korrekt link til Github Actions
-* [ ] `README.md` beskriver prosjektets funksjonalitet, hvordan man bygger det og hvordan man kjører det
-* [ ] `README.md` beskriver eventuell ekstra leveranse utover minimum
-* [ ] `README.md` inneholder et diagram som viser datamodellen
+* [x] `README.md` inneholder en korrekt link til Github Actions
+* [x] `README.md` beskriver prosjektets funksjonalitet, hvordan man bygger det og hvordan man kjører det
+* [x] `README.md` beskriver eventuell ekstra leveranse utover minimum
+* [x] `README.md` inneholder et diagram som viser datamodellen
 
 ### Koden
 
@@ -43,12 +43,12 @@
 * [x] Programmet kan opprette spørsmål og lagrer disse i databasen (påkrevd for bestått)
 * [x] Programmet kan vise spørsmål (påkrevd for D)
 * [x] Programmet kan legge til alternativ for spørsmål (påkrevd for D)
-* [ ] Programmet kan registrere svar på spørsmål (påkrevd for C)
-* [ ] Programmet kan endre tittel og tekst på et spørsmål (påkrevd for B)
+* [x] Programmet kan registrere svar på spørsmål (påkrevd for C)
+* [x] Programmet kan endre tittel og tekst på et spørsmål (påkrevd for B)
 
 ### Ekstraspørsmål (dere må løse mange/noen av disse for å oppnå A/B)
 
-* [ ] Før en bruker svarer på et spørsmål hadde det vært fint å la brukeren registrere navnet sitt. Klarer dere å implementere dette med cookies? Lag en form med en POST request der serveren sender tilbake Set-Cookie headeren. Browseren vil sende en Cookie header tilbake i alle requester. Bruk denne til å legge inn navnet på brukerens svar
+* [x] Før en bruker svarer på et spørsmål hadde det vært fint å la brukeren registrere navnet sitt. Klarer dere å implementere dette med cookies? Lag en form med en POST request der serveren sender tilbake Set-Cookie headeren. Browseren vil sende en Cookie header tilbake i alle requester. Bruk denne til å legge inn navnet på brukerens svar
 * [x] Når brukeren utfører en POST hadde det vært fint å sende brukeren tilbake til dit de var før. Det krever at man svarer med response code 303 See other og headeren Location
 * [x] Når brukeren skriver inn en tekst på norsk må man passe på å få encoding riktig. Klarer dere å lage en <form> med action=POST og encoding=UTF-8 som fungerer med norske tegn? Klarer dere å få æøå til å fungere i tester som gjør både POST og GET?
 * [x] Å opprette og liste spørsmål hadde vært logisk og REST-fult å gjøre med GET /api/questions og POST /api/questions. Klarer dere å endre måten dere hånderer controllers på slik at en GET og en POST request kan ha samme request target?
@@ -62,3 +62,29 @@
 * [x] I forelesningen fikk vi en rar feil med CSS når vi hadde `<!DOCTYPE html>`. Grunnen til det er feil content-type. Klarer dere å fikse det slik at det fungerer å ha `<!DOCTYPE html>` på starten av alle HTML-filer?
 * [ ] Klarer dere å lage en Coverage-rapport med GitHub Actions med Coveralls? (Advarsel: Foreleser har nylig opplevd feil med Coveralls så det er ikke sikkert dere får det til å virke)
 * [ ] FARLIG: I løpet av kurset har HttpServer og tester fått funksjonalitet som ikke lenger er nødvendig. Klarer dere å fjerne alt som er overflødig nå uten å også fjerne kode som fortsatt har verdi? (Advarsel: Denne kan trekke ned dersom dere gjør det feil!)
+
+
+### Link til GitHub Actions
+
+### Funksjonalitet
+- Opprette bruker med fornavn, etternavn og epost. Dersom bruker ikke opprettes vil det brukes en default-bruker til opprettelse av spørreundersøkelser og besvarelser. 
+- Bruker kan opprette egen spørreundersøkelse med spørsmål eller legge til spørsmål i allerede eksisterende spørreundersøkelse.
+- Brukeren kan legge til opptil flere svaralternativer per spørsmål. Hvert alternativ vil vises som en radio-button.
+- Bruker kan besvare spørreundersøkelser blant alle som er opprettet.
+- Bruker kan se besvarelser knyttet til hver enkelt spørsmål.
+  - Lister ut tittel på spørsmål, spørsmålet, besvarelse, og av hvilken bruker.
+- Bruker kan redigere et spørsmåls tittel og tekst.
+
+### Ekstra
+- Cookies for å bevare nylig registrert bruker.
+- Encoding av tekst.
+- Sende brukeren tilbake til der de var ved POST.
+- GET og POST har samme request target.
+- Bruk av felles kode i AbstractDao.
+- Statuskode 500 ved krasj av server.
+- Rettet feil i JDBC-kode fra forelesning.
+- Håndtering av request target "/"
+- UML diagram som dokumenterer datamodell og/eller arkitektur (presentert i README.md)
+
+### Databasemodell
+![Blank diagram](https://user-images.githubusercontent.com/69323014/141691837-01d1c163-3b2c-4851-8286-e73fb9986bfb.png)
