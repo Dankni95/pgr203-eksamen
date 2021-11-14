@@ -47,9 +47,9 @@ public class WriteEditQuestionController implements HttpController {
         int surveyId = Integer.parseInt(parameters.get("id"));
 
         for (Question q : questionDao.listAll()) {
-            if(q.getSurveyId() == surveyId){
+            if (q.getSurveyId() == surveyId) {
                 responseText
-                        .append("<option").append(" value=").append("\"").append(q.getId()).append("\"").append(">").append(q.getTitle("question title"))
+                        .append("<option").append(" value=").append("\"").append(q.getId()).append("\"").append(">").append(q.getTitle())
                         .append("</option>");
 
             }

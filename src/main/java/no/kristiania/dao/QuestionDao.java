@@ -35,7 +35,7 @@ public class QuestionDao extends AbstractDao<Question> {
                     Statement.RETURN_GENERATED_KEYS
 
             )) {
-                statement.setString(1, question.getTitle("question title"));
+                statement.setString(1, question.getTitle());
                 statement.setString(2, question.getText());
                 statement.setLong(3, question.getSurveyId());
                 statement.setLong(4, question.getUserId());
@@ -56,7 +56,7 @@ public class QuestionDao extends AbstractDao<Question> {
             try (PreparedStatement statement = connection.prepareStatement(
                     "update question set (question_title, question_text) = (?,?) where id = (?)"
             )) {
-                statement.setString(1, question.getTitle("question title"));
+                statement.setString(1, question.getTitle());
                 statement.setString(2, question.getText());
                 statement.setLong(3, question.getId());
 

@@ -16,6 +16,7 @@ public class WriteUserController implements HttpController {
         String firstName;
         String lastName;
 
+
         if (Cookie.getUser(request.headerFields.get("Cookie").split("=")[1].split(";")[0]) != null) {
 
             // Intellij keeps adding default cookie?

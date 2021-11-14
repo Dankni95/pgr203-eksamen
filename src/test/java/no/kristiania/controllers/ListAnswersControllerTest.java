@@ -8,11 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ListAnswersControllerTest {
+public class ListAnswersControllerTest {
     private final HttpServer server = new HttpServer(0);
 
     public ListAnswersControllerTest() throws IOException {
@@ -49,7 +50,7 @@ class ListAnswersControllerTest {
         surveyDao.save(survey);
 
         Question question = new Question();
-        question.getTitle("question title");
+        question.setTitle("question title");
         question.setText("question text");
         question.setSurveyId(survey.getId());
         question.setUserId(user.getId());

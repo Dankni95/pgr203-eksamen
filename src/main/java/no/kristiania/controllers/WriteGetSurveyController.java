@@ -17,7 +17,7 @@ public class WriteGetSurveyController implements HttpController {
     private final SurveyDao surveyDao;
 
 
-    public WriteGetSurveyController(OptionDao optionDao, QuestionDao questionDao, UserDao userDao, SurveyDao surveyDao,AnswerDao answerDao) {
+    public WriteGetSurveyController(OptionDao optionDao, QuestionDao questionDao, UserDao userDao, SurveyDao surveyDao, AnswerDao answerDao) {
         this.optionDao = optionDao;
         this.questionDao = questionDao;
         this.userDao = userDao;
@@ -29,11 +29,11 @@ public class WriteGetSurveyController implements HttpController {
         String responseText = "";
 
         Map<String, String> parameters = HttpMessage.parseRequestParameters(request.getHeader("Referer"));
-
+        
         User surveyCreator;
-        if ((surveyCreator = userDao.retrieve(surveyDao.retrieve(Integer.parseInt(parameters.get("id"))).getUserId())) != null){
+        if ((surveyCreator = userDao.retrieve(surveyDao.retrieve(Integer.parseInt(parameters.get("id"))).getUserId())) != null) {
 
-        }else {
+        } else {
             surveyCreator = new User();
             surveyCreator.setFirstName("Annon");
         }
@@ -47,10 +47,10 @@ public class WriteGetSurveyController implements HttpController {
 
             if (question.getSurveyId() == Integer.parseInt(parameters.get("id").trim())) {
 
-                responseText += "<div class='form-control' for=" + "'" + question.getTitle("question title") + "'"
+                responseText += "<div class='form-control' for=" + "'" + question.getTitle() + "'"
                         + "<p style>" + "Question created by " + userDao.retrieve(question.getUserId()).getFirstName() + "</p>"
                         + "<h2>"
-                        + question.getTitle("question title")
+                        + question.getTitle()
                         + "</h2>"
                         + "<h4>"
                         + question.getText()
@@ -59,11 +59,11 @@ public class WriteGetSurveyController implements HttpController {
 
                 for (Option op : optionDao.listOptionsByQuestionId(i)) {
 
-                    responseText += "<div for='" + question.getTitle("question title") + "' id='" + question.getTitle("question title") + "'" + ">" +
+                    responseText += "<div for='" + question.getTitle() + "' id='" + question.getTitle() + "'" + ">" +
 
-                            "<label for=\"" + question.getTitle("question title") + "\">"
-                            + "<input type=\"radio\" name=\"" + question.getTitle("question title") + "\""
-                            + " value=\"" + op.getTitle() + "=" + question.getTitle("question title") + "\">"
+                            "<label for=\"" + question.getTitle() + "\">"
+                            + "<input type=\"radio\" name=\"" + question.getTitle() + "\""
+                            + " value=\"" + op.getTitle() + "=" + question.getTitle() + "\">"
                             + op.getTitle() + "</input>"
 
 

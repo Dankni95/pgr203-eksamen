@@ -48,7 +48,7 @@ public class ListAnswersByQuestionController implements HttpController {
                 if (option.getId() == answer.getOptionId()) {
                     Question question = questionDao.retrieve(Integer.parseInt(parameters.get("questionId")));
                     User user = userDao.retrieve(answer.getUserId());
-                    messageBody += "<div style='text-align: center;'><h1>" + question.getTitle("question title") + "</h1>" +
+                    messageBody += "<div style='text-align: center;'><h1>" + question.getTitle() + "</h1>" +
                             "<h4>" + question.getText() + "</h4>" +
                             "<p>" + "Answer: " + option.getTitle() + "</p>" +
                             "<p>" + "Answered by: " + user.getFirstName() + " " + user.getLastName() + "</p><br>";
@@ -57,9 +57,9 @@ public class ListAnswersByQuestionController implements HttpController {
         }
         messageBody += "</div>";
 
-        if (messageBody.endsWith("<body></div>")){
+        if (messageBody.endsWith("<body></div>")) {
             messageBody += "<h1 style='text-align: center;'> There is no answers to this question </h1></body></html>";
-        }else {
+        } else {
             messageBody += "</body></html>";
         }
 

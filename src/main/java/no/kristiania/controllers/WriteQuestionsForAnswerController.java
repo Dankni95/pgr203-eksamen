@@ -8,7 +8,6 @@ import no.kristiania.http.HttpMessage;
 import java.sql.SQLException;
 
 public class WriteQuestionsForAnswerController implements HttpController {
-
     private final QuestionDao questionDao;
 
     public WriteQuestionsForAnswerController(QuestionDao questionDao) {
@@ -18,8 +17,6 @@ public class WriteQuestionsForAnswerController implements HttpController {
 
     @Override
     public HttpMessage handle(HttpMessage request) throws SQLException {
-
-
         StringBuilder responseText = new StringBuilder();
 
         writeAnswersHeader(responseText);
@@ -45,7 +42,7 @@ public class WriteQuestionsForAnswerController implements HttpController {
         for (Question q : questionDao.listAll()) {
 
             responseText
-                    .append("<option").append(" value=").append("\"").append(q.getId()).append("\"").append(">").append(q.getTitle("question title"))
+                    .append("<option").append(" value=").append("\"").append(q.getId()).append("\"").append(">").append(q.getTitle())
                     .append("</option>");
         }
         responseText.append("</select>");

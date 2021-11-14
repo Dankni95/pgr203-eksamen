@@ -37,7 +37,7 @@ public class CreateSurveyControllerTest {
 
         assertThat(questionDao.listAll())
                 .anySatisfy(p -> {
-                    assertThat(p.getTitle("question title")).isEqualTo("Question title");
+                    assertThat(p.getTitle()).isEqualTo("Question title");
                     assertThat(p.getText()).isEqualTo("Question subtitle");
                 });
 
@@ -47,6 +47,10 @@ public class CreateSurveyControllerTest {
                     assertThat(o.getQuestionId()).isEqualTo(1);
                 });
 
+
+
+        userDao.deleteAll();
+        surveyDao.deleteAll();
         optionDao.deleteAll();
         questionDao.deleteAll();
     }

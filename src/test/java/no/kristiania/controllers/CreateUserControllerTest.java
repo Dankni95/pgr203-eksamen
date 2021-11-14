@@ -22,7 +22,6 @@ public class CreateUserControllerTest {
     @Test
     void shouldHandleHttpMessage() throws SQLException, IOException {
         UserDao userDao = new UserDao(TestData.testDataSource());
-        userDao.deleteAll();
 
         server.addController("POST /api/user", new CreateUserController(userDao));
 
